@@ -1,0 +1,77 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="container">
+    <span class="etiqueta">Medios y periodistas</span>
+    <h1>Prensa</h1>
+    <p style="max-width:560px;margin-top:1rem;">Material disponible para reseñadores, periodistas, podcasters y medios culturales. Contacto directo: <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+
+    <div class="prensa-grid">
+      <div class="prensa-item">
+        <h3>Libros en PDF</h3>
+        <p>Copias digitales de <em>El Boliche Quemado</em> y <em>Contexto Quemado</em> para reseña.</p>
+        <a href="mailto:{{ .Site.Params.email }}?subject=Solicitud de ejemplar para reseña" class="btn btn-secundario" style="font-size:.82rem;">Solicitar por email</a>
+      </div>
+      <div class="prensa-item">
+        <h3>Booktrailers</h3>
+        <p>Videos oficiales de ambos libros disponibles para publicar o compartir.</p>
+        <a href="/videos/" class="btn btn-secundario" style="font-size:.82rem;">Ver videos</a>
+      </div>
+      <div class="prensa-item">
+        <h3>Identidad visual</h3>
+        <p>Logo del autor, tapas en alta resolución y renders disponibles a solicitud.</p>
+        <a href="mailto:{{ .Site.Params.email }}?subject=Solicitud de material visual" class="btn btn-secundario" style="font-size:.82rem;">Solicitar por email</a>
+      </div>
+      <div class="prensa-item">
+        <h3>Audiolibro / Audiocuentos</h3>
+        <p>Fragmentos de audio para medios que trabajen contenido sonoro.</p>
+        <a href="mailto:{{ .Site.Params.email }}?subject=Solicitud de fragmento de audio" class="btn btn-secundario" style="font-size:.82rem;">Solicitar por email</a>
+      </div>
+    </div>
+
+    <div style="margin-top:4rem;">
+      <span class="etiqueta">Datos de referencia</span>
+      <h2>El autor en una línea</h2>
+      <div class="divisor"></div>
+      <blockquote class="cita-autoral">"Cristian Piscitelli escribe historias donde lo que arde no siempre se ve, pero siempre deja olor a humo."</blockquote>
+    </div>
+
+    <div style="margin-top:3rem;">
+      <h2>Preguntas sugeridas para entrevistas</h2>
+      <div class="divisor"></div>
+      <ol style="padding-left:1.5rem;color:var(--crema-suave);line-height:2.2;">
+        <li>¿Cómo influyó tu infancia en Daireaux en la construcción del Universo Quemado?</li>
+        <li>¿Por qué el fuego como imagen central en toda tu obra?</li>
+        <li>¿Qué relación tiene la memoria con el silencio en tus libros?</li>
+        <li>¿Cómo trabajás el punto de vista de los personajes femeninos en una época tan marcada por el mandato social?</li>
+        <li>¿Qué diferencia hay para vos entre escribir una novela y escribir cuentos?</li>
+        <li>¿Cómo definirías el realismo gótico rural bonaerense?</li>
+        <li>¿Qué querés que el lector sienta después de cerrar uno de tus libros?</li>
+        <li>¿Qué rol le das a la adaptación audiovisual dentro del Universo Quemado?</li>
+      </ol>
+    </div>
+
+    <div style="margin-top:3rem;">
+      <h2>Comparables literarios</h2>
+      <div class="divisor"></div>
+      <p>Parentescos de sensibilidad (no equivalencias): Juan Rulfo · Horacio Quiroga · Selva Almada · Mariana Enríquez.</p>
+    </div>
+
+    <div style="margin-top:3rem;background:var(--grafito);border-radius:4px;padding:2rem;">
+      <h3>Contacto de prensa</h3>
+      <div class="divisor"></div>
+      <p><strong>Email:</strong> <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></p>
+      <p><strong>Instagram:</strong> <a href="{{ .Site.Params.instagram }}" target="_blank" rel="noopener">@cpiscitelliescritor</a></p>
+      <p><strong>Linktree:</strong> <a href="{{ .Site.Params.linktree }}" target="_blank" rel="noopener">linktr.ee/crispisci</a></p>
+      <p><strong>Amazon Author:</strong> <a href="{{ .Site.Params.amazon }}" target="_blank" rel="noopener">amazon.com/author/crispe</a></p>
+      <p><strong>Goodreads:</strong> <a href="{{ .Site.Params.goodreads }}" target="_blank" rel="noopener">Cristian Piscitelli en Goodreads</a></p>
+      <p><strong>Registro de Escritores:</strong> <a href="{{ .Site.Params.registro }}" target="_blank" rel="noopener">registrodeescritores.com.ar</a></p>
+    </div>
+
+  </div>
+</div>
+{{ end }}

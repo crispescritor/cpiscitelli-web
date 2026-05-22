@@ -1,0 +1,27 @@
+{
+  "capitulos": [
+    { "numero": "◆", "titulo": "Dedicatoria", "audio_url": "", "duracion": "" },
+    { "numero": "◆", "titulo": "Prólogo", "audio_url": "", "duracion": "" },
+    { "numero": "01", "titulo": "Capítulo 1", "audio_url": "/audio/EBQ-Cap1.mp3", "duracion": "" },
+    { "numero": "02", "titulo": "Capítulo 2", "audio_url": "", "duracion": "" },
+    { "numero": "03", "titulo": "Capítulo 3", "audio_url": "", "duracion": "" },
+    { "numero": "04", "titulo": "Capítulo 4", "audio_url": "", "duracion": "" },
+    { "numero": "05", "titulo": "Capítulo 5", "audio_url": "", "duracion": "" },
+    { "numero": "06", "titulo": "Capítulo 6", "audio_url": "", "duracion": "" },
+    { "numero": "07", "titulo": "Capítulo 7", "audio_url": "", "duracion": "" },
+    { "numero": "08", "titulo": "Capítulo 8", "audio_url": "", "duracion": "" },
+    { "numero": "09", "titulo": "Capítulo 9", "audio_url": "", "duracion": "" },
+    { "numero": "10", "titulo": "Capítulo 10", "audio_url": "", "duracion": "" },
+    { "numero": "11", "titulo": "Capítulo 11", "audio_url": "", "duracion": "" },
+    { "numero": "12", "titulo": "Capítulo 12", "audio_url": "", "duracion": "" },
+    { "numero": "13", "titulo": "Capítulo 13", "audio_url": "", "duracion": "" },
+    { "numero": "14", "titulo": "Capítulo 14", "audio_url": "", "duracion": "" },
+    { "numero": "15", "titulo": "Capítulo 15", "audio_url": "", "duracion": "" },
+    { "numero": "16", "titulo": "Capítulo 16", "audio_url": "", "duracion": "" },
+    { "numero": "17", "titulo": "Capítulo 17", "audio_url": "", "duracion": "" },
+    { "numero": "18", "titulo": "Capítulo 18", "audio_url": "", "duracion": "" },
+    { "numero": "19", "titulo": "Capítulo 19", "audio_url": "", "duracion": "" },
+    { "numero": "20", "titulo": "Capítulo 20", "audio_url": "", "duracion": "" },
+    { "numero": "◆", "titulo": "Nota del autor", "audio_url": "", "duracion": "" }
+  ]
+}

@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="section">
+  <div class="container">
+    <div class="libro-page__header">
+      <div class="libro-page__tapa">
+        <img src="{{ .Params.tapa }}" alt="{{ .Title }}"
+             onerror="this.parentElement.innerHTML='<div style=\'background:var(--grafito);height:100%;display:flex;align-items:center;justify-content:center;color:var(--gris);padding:1rem;text-align:center;\'>{{ .Title }}</div>'">
+      </div>
+      <div>
+        <span class="etiqueta">{{ .Params.tipo }}</span>
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.subtitulo }}<p style="font-style:italic;color:var(--gris);margin-top:.25rem;">{{ . }}</p>{{ end }}
+        <div class="divisor"></div>
+        <p><strong>ISBN:</strong> <span style="color:var(--gris);font-size:.85rem;">{{ .Params.isbn }}</span></p>
+        <p><strong>Género:</strong> <span style="color:var(--gris);font-size:.85rem;">{{ .Params.genero }}</span></p>
+        <div class="libro-card__formatos" style="margin-top:1rem;">
+          {{ range .Params.formatos }}<span class="formato-tag">{{ . }}</span>{{ end }}
+        </div>
+        <div class="botones-grupo">
+          <a href="{{ $.Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar en tienda</a>
+          <a href="{{ $.Site.Params.amazon }}" class="btn btn-secundario" target="_blank" rel="noopener">Amazon Kindle</a>
+        </div>
+        {{ if .Params.audio_url }}
+        <div style="margin-top:2rem;">
+          <span class="etiqueta">{{ .Params.audio_label }}</span>
+          <audio controls style="width:100%;margin-top:.5rem;accent-color:var(--brasa);">
+            <source src="{{ .Params.audio_url }}" type="audio/mpeg">
+          </audio>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    <div style="max-width:720px;">
+      <h2>Sinopsis</h2>
+      <div class="divisor"></div>
+      {{ .Content }}
+    </div>
+  </div>
+</div>
+{{ end }}

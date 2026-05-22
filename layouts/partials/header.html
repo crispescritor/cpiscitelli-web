@@ -1,0 +1,18 @@
+<header class="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo">Cristian <span>Piscitelli</span></a>
+    <button class="nav__toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="navMenu">
+      {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}">{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</header>
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navMenu').classList.toggle('abierto');
+  });
+</script>

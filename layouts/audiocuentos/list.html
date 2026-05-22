@@ -1,0 +1,47 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="container">
+    <span class="etiqueta">Contexto Quemado</span>
+    <h1>Audiocuentos</h1>
+    <p style="max-width:560px;margin-top:1rem;">Los diez cuentos de <em>Contexto Quemado</em> narrados en audio. Cada uno es un umbral. Elegí por dónde entrar.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container" style="max-width:800px;">
+
+    <div class="audio-hosting-nota">
+      Para escuchar los audiocuentos completos, adquirí <em>Contexto Quemado</em> en la tienda.
+      Los fragmentos de muestra están disponibles a continuación.
+      <div style="margin-top:.75rem;">
+        <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener" style="font-size:.82rem;padding:.5rem 1.2rem;">Comprar en tienda</a>
+      </div>
+    </div>
+
+    <div class="audio-lista">
+
+      {{ range hugo.Data.audiocuentos.cuentos }}
+      <div class="audio-item">
+        <div class="audio-item__header">
+          <span class="audio-item__numero">{{ .numero }}</span>
+          <span class="audio-item__titulo">{{ .titulo }}</span>
+          {{ with .duracion }}<span class="audio-item__duracion">{{ . }}</span>{{ end }}
+        </div>
+        {{ with .descripcion }}<p class="audio-muestra">{{ . }}</p>{{ end }}
+        {{ if .audio_url }}
+        <audio controls>
+          <source src="{{ .audio_url }}" type="audio/mpeg">
+          Tu navegador no soporta audio HTML5.
+        </audio>
+        {{ else }}
+        <div style="font-size:.8rem;color:var(--gris);font-style:italic;padding:.4rem 0;">
+          Disponible con la compra del libro
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+
+    </div>
+  </div>
+</div>
+{{ end }}

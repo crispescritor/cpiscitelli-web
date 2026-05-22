@@ -1,0 +1,14 @@
+{
+  "cuentos": [
+    { "numero": "01", "titulo": "La cuadra de las bestias", "audio_url": "", "descripcion": "El primero de los umbrales." },
+    { "numero": "02", "titulo": "Condimentos para una muerte", "audio_url": "", "descripcion": "" },
+    { "numero": "03", "titulo": "Donde no dolía tanto", "audio_url": "", "descripcion": "" },
+    { "numero": "04", "titulo": "El Cuerpo Negado", "audio_url": "", "descripcion": "" },
+    { "numero": "05", "titulo": "Ella volverá", "audio_url": "", "descripcion": "" },
+    { "numero": "06", "titulo": "La vida en otra", "audio_url": "", "descripcion": "" },
+    { "numero": "07", "titulo": "Lo que un hombre debe ser", "audio_url": "", "descripcion": "" },
+    { "numero": "08", "titulo": "Memoria Clara", "audio_url": "", "descripcion": "" },
+    { "numero": "09", "titulo": "Necropsia de un hombre vivo", "audio_url": "", "descripcion": "" },
+    { "numero": "10", "titulo": "Una casa sin timbre", "audio_url": "", "descripcion": "El último umbral." }
+  ]
+}

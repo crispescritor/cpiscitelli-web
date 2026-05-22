@@ -1,0 +1,7 @@
+public/
+resources/_gen/
+.hugo_build.lock
+*.mp3
+*.mp4
+*.wav
+*.mov

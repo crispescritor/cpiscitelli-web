@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="section">
+  <div class="container">
+    <div class="sobre__grid">
+      <div>
+        <div class="sobre__foto">
+          <img src="/img/foto-autor.jpg" alt="Cristian Piscitelli"
+               onerror="this.parentElement.innerHTML='<div class=\'sobre__foto-placeholder\'>Foto del autor<br><small>próximamente</small></div>'">
+        </div>
+      </div>
+      <div>
+        <span class="etiqueta">Sobre el autor</span>
+        <h1>Cristian Piscitelli</h1>
+        <div class="divisor"></div>
+        <p>Escritor argentino nacido en Chacabuco, criado en Daireaux y radicado en Pehuajó, provincia de Buenos Aires. Empezó a escribir cerca de los trece años, primero ligado a la poesía y luego a relatos y cuentos.</p>
+        <p>Su escritura no nace de una pose intelectual sino de una necesidad de traducción interior: convierte intuiciones, recuerdos y escenas mentales en lenguaje. No diseña tramas de catálogo; desentierra atmósferas.</p>
+        <p>Su obra se construye desde una zona literaria muy definida: la pampa bonaerense, los pueblos chicos, los silencios familiares, la violencia simbólica, la memoria afectiva y la culpa acumulada.</p>
+        <blockquote class="cita-autoral">"No escribo sobre pueblos tranquilos.<br>Escribo sobre lo que los pueblos tranquilos esconden."</blockquote>
+        <p>Su narrativa combina el thriller psicológico, el realismo gótico rural y el costumbrismo oscuro para explorar lo que el pueblo oculta, lo que la familia disimula, lo que la moral pública ordena callar y lo que el cuerpo termina recordando.</p>
+        <p>Autor de <em>El Boliche Quemado</em> y <em>Contexto Quemado</em>, primeras obras del <strong>Universo Quemado</strong>.</p>
+        <div class="botones-grupo">
+          <a href="{{ .Site.Params.instagram }}" class="btn btn-secundario" target="_blank" rel="noopener">Instagram</a>
+          <a href="{{ .Site.Params.goodreads }}" class="btn btn-secundario" target="_blank" rel="noopener">Goodreads</a>
+          <a href="{{ .Site.Params.registro }}" class="btn btn-secundario" target="_blank" rel="noopener">Registro de Escritores</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:5rem;">
+      <span class="etiqueta">Parentescos de sensibilidad</span>
+      <h2>Referentes literarios</h2>
+      <div class="divisor"></div>
+      <div class="grilla-2">
+        <div><strong>Juan Rulfo</strong><p style="font-size:.9rem;">Territorio donde el pasado sigue hablando.</p></div>
+        <div><strong>Horacio Quiroga</strong><p style="font-size:.9rem;">Psicología oscura y naturaleza fatal.</p></div>
+        <div><strong>Selva Almada</strong><p style="font-size:.9rem;">Ruralidad y violencia latente en espacios pequeños.</p></div>
+        <div><strong>Mariana Enríquez</strong><p style="font-size:.9rem;">Lo oscuro como parte del tejido social.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,68 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="container">
+    <span class="etiqueta">Universo Quemado</span>
+    <h1>Videos</h1>
+    <p style="max-width:560px;margin-top:1rem;">Booktrailers, reels y piezas audiovisuales del Universo Quemado.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+
+    <span class="etiqueta">El Boliche Quemado</span>
+    <h2>Booktrailers EBQ</h2>
+    <div class="divisor"></div>
+    <div class="video-grilla" style="margin-bottom:4rem;">
+      <div class="video-item">
+        <div class="video-item__player">
+          <video controls poster="/img/tapa-ebq.jpg">
+            <source src="/video/BookTrailer_EBQ.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-item__info">
+          <div class="video-item__tipo">Booktrailer oficial</div>
+          <div class="video-item__titulo">El Boliche Quemado</div>
+        </div>
+      </div>
+    </div>
+
+    <span class="etiqueta">Contexto Quemado</span>
+    <h2>Booktrailers CQ</h2>
+    <div class="divisor"></div>
+    <div class="video-grilla" style="margin-bottom:4rem;">
+      <div class="video-item">
+        <div class="video-item__player">
+          <video controls poster="/img/tapa-cq.jpg">
+            <source src="/video/contexto_booktrailer.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-item__info">
+          <div class="video-item__tipo">Booktrailer oficial</div>
+          <div class="video-item__titulo">Contexto Quemado</div>
+        </div>
+      </div>
+      <div class="video-item">
+        <div class="video-item__player">
+          <video controls>
+            <source src="/video/dos_libros_promocion.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-item__info">
+          <div class="video-item__tipo">Promoción</div>
+          <div class="video-item__titulo">Los dos libros del Universo Quemado</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:2rem 0;">
+      <p style="color:var(--gris);margin-bottom:1.5rem;">Más videos, reels y piezas del universo en YouTube y TikTok.</p>
+      <div class="botones-grupo" style="justify-content:center;">
+        <a href="{{ .Site.Params.youtube }}" class="btn btn-primario" target="_blank" rel="noopener">Ver canal de YouTube</a>
+        <a href="{{ .Site.Params.tiktok }}" class="btn btn-secundario" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,158 @@
+{{ define "main" }}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__inner">
+    <span class="hero__pretitulo">Universo Quemado</span>
+    <h1 class="hero__titulo">Cristian<br><em>Piscitelli</em></h1>
+    <p class="hero__tagline">{{ .Site.Params.tagline }}</p>
+    <p class="hero__bajada">Escritor argentino. Thriller psicológico rural. Realismo gótico bonaerense.</p>
+    <div class="botones-grupo">
+      <a href="/libros/" class="btn btn-primario">Ver los libros</a>
+      <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Tienda online</a>
+    </div>
+  </div>
+</section>
+
+<!-- LIBROS -->
+<section class="section section--oscura">
+  <div class="container">
+    <span class="etiqueta">Universo Quemado</span>
+    <h2>Las obras</h2>
+    <div class="divisor"></div>
+    <div class="grilla-2">
+
+      <div class="libro-card">
+        <div class="libro-card__imagen">
+          <img src="/img/tapa-ebq.jpg" alt="El Boliche Quemado" onerror="this.parentElement.innerHTML='<span>El Boliche Quemado</span>'">
+        </div>
+        <div class="libro-card__cuerpo">
+          <span class="libro-card__genero">Novela · Thriller psicológico rural</span>
+          <h3 class="libro-card__titulo">El Boliche Quemado</h3>
+          <p class="libro-card__sinopsis">En la Nueva Plata de los años sesenta, un boliche arde. El pueblo recuerda sin hablar, niega sin olvidar y conserva bajo la ceniza una verdad que nadie quiere pronunciar.</p>
+          <div class="libro-card__formatos">
+            <span class="formato-tag">Digital</span>
+            <span class="formato-tag">Audiolibro</span>
+            <span class="formato-tag">Físico</span>
+          </div>
+          <div class="botones-grupo">
+            <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar</a>
+            <a href="/libros/el-boliche-quemado/" class="btn btn-secundario">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="libro-card">
+        <div class="libro-card__imagen">
+          <img src="/img/tapa-cq.jpg" alt="Contexto Quemado" onerror="this.parentElement.innerHTML='<span>Contexto Quemado</span>'">
+        </div>
+        <div class="libro-card__cuerpo">
+          <span class="libro-card__genero">Cuentos · Ficción literaria de atmósfera</span>
+          <h3 class="libro-card__titulo">Contexto Quemado</h3>
+          <p class="libro-card__subtitulo">Diez cuentos cortos que incineran</p>
+          <p class="libro-card__sinopsis">Diez cuentos. Diez puertas. Cada relato es un umbral donde el dolor no se exhibe de manera obvia pero respira.</p>
+          <div class="libro-card__formatos">
+            <span class="formato-tag">Digital</span>
+            <span class="formato-tag">Audiocuentos</span>
+          </div>
+          <div class="botones-grupo">
+            <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar</a>
+            <a href="/libros/contexto-quemado/" class="btn btn-secundario">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AUDIOCUENTOS DESTACADO -->
+<section class="section">
+  <div class="container">
+    <span class="etiqueta">Contexto Quemado</span>
+    <h2>Audiocuentos</h2>
+    <div class="divisor"></div>
+    <p>Los diez cuentos de <em>Contexto Quemado</em> narrados en audio. Escuchalos completos o elegí uno para empezar.</p>
+    <div class="botones-grupo">
+      <a href="/audiocuentos/" class="btn btn-primario">Escuchar ahora</a>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIOLIBRO DESTACADO -->
+<section class="section section--media">
+  <div class="container">
+    <span class="etiqueta">El Boliche Quemado</span>
+    <h2>Audiolibro completo</h2>
+    <div class="divisor"></div>
+    <p>La novela completa en audio. 20 capítulos narrados. Escuchá el primer capítulo gratis.</p>
+    <div class="botones-grupo">
+      <a href="/audiolibro/" class="btn btn-primario">Escuchar capítulo 1</a>
+      <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Comprar acceso completo</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="section section--oscura">
+  <div class="container">
+    <span class="etiqueta">Trailers y reels</span>
+    <h2>Videos</h2>
+    <div class="divisor"></div>
+    <p>Booktrailers oficiales de El Boliche Quemado y Contexto Quemado. Piezas del Universo Quemado.</p>
+    <div class="botones-grupo">
+      <a href="/videos/" class="btn btn-primario">Ver todos los videos</a>
+      <a href="{{ .Site.Params.youtube }}" class="btn btn-secundario" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- CITA AUTORAL -->
+<section class="section">
+  <div class="container" style="max-width:680px; text-align:center;">
+    <blockquote class="cita-autoral" style="border-left:none; text-align:center; font-size:1.5rem;">
+      "En mis historias, el silencio no es ausencia.<br>Es el personaje más peligroso."
+    </blockquote>
+    <p style="color:var(--gris); font-size:.85rem;">— Cristian Piscitelli</p>
+    <div class="botones-grupo" style="justify-content:center; margin-top:2rem;">
+      <a href="/sobre/" class="btn btn-secundario">Sobre el autor</a>
+    </div>
+  </div>
+</section>
+
+<!-- REDES -->
+<section class="section section--oscura">
+  <div class="container">
+    <span class="etiqueta">Seguí el universo</span>
+    <h2>Redes y plataformas</h2>
+    <div class="divisor"></div>
+    <div class="redes-grilla">
+      <a href="{{ .Site.Params.instagram }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">📷</span> Instagram
+      </a>
+      <a href="{{ .Site.Params.facebook }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">💬</span> Facebook
+      </a>
+      <a href="{{ .Site.Params.tiktok }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">▶</span> TikTok
+      </a>
+      <a href="{{ .Site.Params.youtube }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">▶</span> YouTube
+      </a>
+      <a href="{{ .Site.Params.amazon }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">📚</span> Amazon
+      </a>
+      <a href="{{ .Site.Params.goodreads }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">⭐</span> Goodreads
+      </a>
+      <a href="{{ .Site.Params.linktree }}" class="red-item" target="_blank" rel="noopener">
+        <span class="red-item__icono">🔗</span> Linktree
+      </a>
+      <a href="mailto:{{ .Site.Params.email }}" class="red-item">
+        <span class="red-item__icono">✉</span> Contacto
+      </a>
+    </div>
+  </div>
+</section>
+
+{{ end }}

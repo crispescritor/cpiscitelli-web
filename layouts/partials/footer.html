@@ -1,0 +1,16 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__logo">Cristian Piscitelli</div>
+    <div class="footer__tagline">{{ .Site.Params.tagline }}</div>
+    <div class="footer__redes">
+      <a href="{{ .Site.Params.instagram }}" target="_blank" rel="noopener">Instagram</a>
+      <a href="{{ .Site.Params.facebook }}" target="_blank" rel="noopener">Facebook</a>
+      <a href="{{ .Site.Params.tiktok }}" target="_blank" rel="noopener">TikTok</a>
+      <a href="{{ .Site.Params.youtube }}" target="_blank" rel="noopener">YouTube</a>
+      <a href="{{ .Site.Params.amazon }}" target="_blank" rel="noopener">Amazon</a>
+      <a href="{{ .Site.Params.goodreads }}" target="_blank" rel="noopener">Goodreads</a>
+      <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+    </div>
+    <div class="footer__copy">&copy; {{ now.Year }} Cristian Piscitelli. Todos los derechos reservados.</div>
+  </div>
+</footer>
