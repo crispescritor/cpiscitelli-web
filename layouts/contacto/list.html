@@ -1,0 +1,138 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="container">
+    <span class="etiqueta">Universo Quemado</span>
+    <h1>Contacto</h1>
+    <p style="max-width:500px;margin-top:.75rem;">
+      Lectores, medios, librerías y proyectos. Escribinos directamente.
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container" style="max-width:980px;">
+    <div class="contacto-grid">
+
+      <!-- FORMULARIO
+           Para activar el envío por email:
+           1. Registrarse en https://formspree.io (gratuito)
+           2. Crear un nuevo form y copiar el ID
+           3. Reemplazar YOUR_FORM_ID en el atributo action
+           Hasta entonces funciona con mailto como respaldo. -->
+      <div data-aos="fade-up">
+        <span class="etiqueta">Enviá tu mensaje</span>
+        <h2 style="margin-bottom:1.5rem;">Escribime</h2>
+
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contacto-form">
+          <input type="hidden" name="_subject" value="Mensaje desde la web">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div class="form-grupo">
+            <label class="form-label" for="nombre">Nombre</label>
+            <input class="form-input" type="text" id="nombre" name="nombre"
+                   placeholder="Tu nombre completo" required autocomplete="name">
+          </div>
+
+          <div class="form-grupo">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email"
+                   placeholder="tu@email.com" required autocomplete="email">
+          </div>
+
+          <div class="form-grupo">
+            <label class="form-label" for="mensaje">Mensaje</label>
+            <textarea class="form-textarea" id="mensaje" name="mensaje"
+                      placeholder="Contame en qué puedo ayudarte..." required rows="6"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primario" style="width:100%;display:flex;justify-content:center;align-items:center;gap:.5rem;font-size:.92rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+            Enviar mensaje
+          </button>
+        </form>
+
+        <div id="form-exito" style="display:none;margin-top:1.5rem;background:var(--grafito);border-left:3px solid var(--brasa);padding:1.25rem 1.5rem;border-radius:4px;">
+          <strong style="color:var(--crema);">Mensaje recibido.</strong>
+          <p style="margin:0;font-size:.88rem;margin-top:.3rem;">Te respondo a la brevedad.</p>
+        </div>
+      </div>
+
+      <!-- INFO LATERAL -->
+      <div class="contacto-info" data-aos="fade-up" data-aos-delay="100">
+        <span class="etiqueta">O escribime directo</span>
+        <h3 style="margin-bottom:1rem;">Contacto directo</h3>
+        <div class="divisor"></div>
+
+        <p>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:.4rem;opacity:.6;">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+        </p>
+
+        <div class="contacto-info__separador"></div>
+
+        <p>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:.4rem;opacity:.6;">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          <a href="{{ .Site.Params.instagram }}" target="_blank" rel="noopener">@cpiscitelliescritor</a>
+        </p>
+
+        <div class="contacto-info__separador"></div>
+
+        <p style="font-size:.8rem;color:var(--gris);line-height:1.7;">
+          Para solicitar ejemplares para reseña, material de prensa o identidad visual, indicálo en el mensaje. Para proyectos de adaptación o derechos, escribí al mismo correo con el asunto claro.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var form = document.getElementById('contacto-form');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    var action = form.getAttribute('action') || '';
+    if (action.indexOf('YOUR_FORM_ID') !== -1) {
+      e.preventDefault();
+      var n = document.getElementById('nombre').value;
+      var em = document.getElementById('email').value;
+      var msg = document.getElementById('mensaje').value;
+      var subj = encodeURIComponent('Mensaje desde la web — ' + n);
+      var body = encodeURIComponent('Nombre: ' + n + '\nEmail: ' + em + '\n\nMensaje:\n' + msg);
+      window.location.href = 'mailto:{{ .Site.Params.email }}?subject=' + subj + '&body=' + body;
+      return;
+    }
+    e.preventDefault();
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    fetch(action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(r) {
+      if (r.ok) {
+        form.style.display = 'none';
+        document.getElementById('form-exito').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensaje';
+      }
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Enviar mensaje';
+    });
+  });
+})();
+</script>
+{{ end }}

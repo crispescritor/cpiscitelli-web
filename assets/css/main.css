@@ -840,3 +840,201 @@ body::before {
    SELECTION COLOR
    ==================================================== */
 ::selection { background: rgba(193,92,30,.35); color: var(--blanco); }
+
+/* ====================================================
+   AUDIO — MUESTRA ÚNICA
+   ==================================================== */
+.audio-muestra-unica {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  background: var(--grafito);
+  border-radius: 8px;
+  padding: 2rem;
+  border: 1px solid rgba(255,255,255,.07);
+}
+.audio-muestra-unica__cover {
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--carbon);
+}
+.audio-muestra-unica__cover img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.audio-muestra-unica__titulo {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  margin-bottom: .75rem;
+}
+.audio-muestra-unica__de {
+  color: var(--gris);
+  font-size: .65em;
+  font-weight: 400;
+}
+.audio-narrador {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .84rem;
+  color: var(--gris);
+  margin-bottom: 1.25rem;
+}
+.audio-narrador strong { color: var(--crema-suave); }
+.audio-player-principal {
+  width: 100%;
+  margin-bottom: 1.25rem;
+  accent-color: var(--brasa);
+  border-radius: var(--radio);
+}
+.audio-nota-compra {
+  font-size: .78rem;
+  color: var(--gris);
+  padding: .7rem 1rem;
+  background: rgba(13,12,11,.5);
+  border-radius: var(--radio);
+  border-left: 2px solid var(--brasa);
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+@media (max-width: 620px) {
+  .audio-muestra-unica {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .audio-muestra-unica__cover {
+    max-width: 160px;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* ====================================================
+   PLATAFORMAS — BOTONES DE COMPRA
+   ==================================================== */
+.plataformas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+}
+.plataforma-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .52rem .95rem;
+  background: var(--grafito);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 6px;
+  color: var(--crema-suave);
+  font-size: .79rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  transition: all var(--transicion);
+  text-decoration: none;
+  line-height: 1;
+}
+.plataforma-btn svg { opacity: .55; flex-shrink: 0; transition: opacity var(--transicion); }
+.plataforma-btn:hover {
+  border-color: var(--brasa);
+  color: var(--crema);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(0,0,0,.45), 0 0 0 1px rgba(193,92,30,.14);
+}
+.plataforma-btn:hover svg { opacity: 1; }
+
+/* ====================================================
+   FORMULARIO DE CONTACTO
+   ==================================================== */
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 4rem;
+  align-items: start;
+}
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  margin-bottom: 1.15rem;
+}
+.form-label {
+  font-size: .73rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gris);
+  font-family: var(--fuente-cuerpo);
+}
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: var(--grafito);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radio);
+  color: var(--crema);
+  font-family: var(--fuente-cuerpo);
+  font-size: .9rem;
+  padding: .72rem 1rem;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--brasa);
+  box-shadow: 0 0 0 3px rgba(193,92,30,.13);
+}
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.65;
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--gris); opacity: .55; }
+.contacto-info { padding-top: .5rem; }
+.contacto-info p { font-size: .88rem; }
+.contacto-info a { color: var(--brasa-claro); }
+.contacto-info a:hover { color: var(--crema); }
+.contacto-info__separador {
+  height: 1px;
+  background: rgba(255,255,255,.06);
+  margin: 1.2rem 0;
+}
+@media (max-width: 780px) {
+  .contacto-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* ====================================================
+   SOBRE — VIDEO AUTOR ANIMADO
+   ==================================================== */
+.sobre__foto video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ====================================================
+   LOGO EN HEADER
+   ==================================================== */
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.1rem;
+  color: var(--blanco);
+  letter-spacing: .02em;
+}
+.header__logo-img {
+  height: 34px;
+  width: auto;
+  mix-blend-mode: screen;
+  opacity: .88;
+  filter: brightness(1.05);
+}
+

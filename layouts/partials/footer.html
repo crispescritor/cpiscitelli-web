@@ -97,8 +97,8 @@
       var mx = 0, my = 0, ax = 0, ay = 0;
       document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
       (function loop() {
-        ax += (mx - ax) * 0.12;
-        ay += (my - ay) * 0.12;
+        ax += (mx - ax) * 0.22;
+        ay += (my - ay) * 0.22;
         punto.style.left = mx + 'px';
         punto.style.top  = my + 'px';
         anillo.style.left = ax + 'px';

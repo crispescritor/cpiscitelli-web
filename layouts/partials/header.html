@@ -1,6 +1,9 @@
 <header class="header">
   <div class="header__inner">
-    <a href="/" class="header__logo">Cristian <span>Piscitelli</span></a>
+    <a href="{{ .Site.BaseURL }}" class="header__logo">
+      <img src="{{ .Site.BaseURL }}img/logocp.png" alt="CiP" class="header__logo-img">
+      Cristian <span>Piscitelli</span>
+    </a>
     <button class="nav__toggle" id="navToggle" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>

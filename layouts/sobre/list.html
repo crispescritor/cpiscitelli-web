@@ -4,8 +4,11 @@
     <div class="sobre__grid">
       <div>
         <div class="sobre__foto">
-          <img src="/img/foto-autor.png" alt="Cristian Piscitelli"
-               onerror="this.parentElement.innerHTML='<div class=\'sobre__foto-placeholder\'>Foto del autor<br><small>próximamente</small></div>'">
+          <video class="sobre__foto-video" autoplay muted loop playsinline poster="/img/foto-autor.png">
+            <source src="/video/foto-autor.mp4" type="video/mp4">
+            <img src="/img/foto-autor.png" alt="Cristian Piscitelli" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<div class=\'sobre__foto-placeholder\'>Foto del autor<br><small>próximamente</small></div>'">
+          </video>
         </div>
       </div>
       <div>
