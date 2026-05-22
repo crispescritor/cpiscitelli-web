@@ -191,9 +191,10 @@ strong { color: var(--crema); font-weight: 500; }
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(193,92,30,.12), transparent),
-    radial-gradient(ellipse 40% 60% at 20% 40%, rgba(193,92,30,.05), transparent);
+  background-image: url('/img/hero-smoke.svg');
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
 }
 .hero__inner {
   position: relative;

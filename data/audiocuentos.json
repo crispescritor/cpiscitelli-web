@@ -1,14 +1,54 @@
 {
   "cuentos": [
-    { "numero": "01", "titulo": "La cuadra de las bestias", "audio_url": "", "descripcion": "El primero de los umbrales." },
-    { "numero": "02", "titulo": "Condimentos para una muerte", "audio_url": "", "descripcion": "" },
-    { "numero": "03", "titulo": "Donde no dolía tanto", "audio_url": "", "descripcion": "" },
-    { "numero": "04", "titulo": "El Cuerpo Negado", "audio_url": "", "descripcion": "" },
-    { "numero": "05", "titulo": "Ella volverá", "audio_url": "", "descripcion": "" },
-    { "numero": "06", "titulo": "La vida en otra", "audio_url": "", "descripcion": "" },
-    { "numero": "07", "titulo": "Lo que un hombre debe ser", "audio_url": "", "descripcion": "" },
-    { "numero": "08", "titulo": "Memoria Clara", "audio_url": "", "descripcion": "" },
-    { "numero": "09", "titulo": "Necropsia de un hombre vivo", "audio_url": "", "descripcion": "" },
-    { "numero": "10", "titulo": "Una casa sin timbre", "audio_url": "", "descripcion": "El último umbral." }
+    {
+      "numero": "01", "titulo": "La cuadra de las bestias",
+      "duracion": "13:45", "descripcion": "El primero de los umbrales.",
+      "audio_url": "/audio/cq/muestra.mp3"
+    },
+    {
+      "numero": "02", "titulo": "Condimentos para una muerte",
+      "duracion": "22:30", "descripcion": "Una receta que no se olvidará.",
+      "audio_url": ""
+    },
+    {
+      "numero": "03", "titulo": "Donde no dolía tanto",
+      "duracion": "24:30", "descripcion": "El dolor tiene sus geografías.",
+      "audio_url": ""
+    },
+    {
+      "numero": "04", "titulo": "El Cuerpo Negado",
+      "duracion": "30:00", "descripcion": "Lo que el cuerpo sabe y la mente niega.",
+      "audio_url": ""
+    },
+    {
+      "numero": "05", "titulo": "Ella volverá",
+      "duracion": "23:45", "descripcion": "La espera como forma de vida.",
+      "audio_url": ""
+    },
+    {
+      "numero": "06", "titulo": "La vida en otra",
+      "duracion": "24:20", "descripcion": "Otra vida, la misma trampa.",
+      "audio_url": ""
+    },
+    {
+      "numero": "07", "titulo": "Lo que un hombre debe ser",
+      "duracion": "17:45", "descripcion": "El mandato más pesado.",
+      "audio_url": ""
+    },
+    {
+      "numero": "08", "titulo": "Memoria Clara",
+      "duracion": "18:20", "descripcion": "Recordar con demasiada claridad.",
+      "audio_url": ""
+    },
+    {
+      "numero": "09", "titulo": "Necropsia de un hombre vivo",
+      "duracion": "23:40", "descripcion": "Un hombre se examina desde adentro.",
+      "audio_url": ""
+    },
+    {
+      "numero": "10", "titulo": "Una casa sin timbre",
+      "duracion": "12:05", "descripcion": "El décimo umbral. El último.",
+      "audio_url": ""
+    }
   ]
 }

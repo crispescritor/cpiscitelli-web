@@ -1,7 +1,14 @@
 public/
 resources/_gen/
 .hugo_build.lock
-*.mp3
-*.mp4
-*.wav
-*.mov
+# Multimedia — incluir en build local para hosting, excluir de git
+static/audio/
+static/video/
+# Imágenes pesadas (>5MB) — subir manualmente al hosting
+static/img/og-image.png
+static/img/tapa-ebq.png
+static/img/tapa-cq.png
+static/img/foto-autor.png
+# Archivos temporales
+*.tmp
+*.bak
