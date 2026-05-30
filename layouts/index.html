@@ -1,15 +1,5 @@
 {{ define "main" }}
 
-<!-- PAGE LOADER -->
-<div class="page-loader" id="page-loader">
-  <div class="loader-titulo">Universo Quemado</div>
-  <div class="loader-barra"><div class="loader-barra__relleno"></div></div>
-</div>
-
-<!-- CUSTOM CURSOR -->
-<div class="cursor-punto"></div>
-<div class="cursor-anillo"></div>
-
 <!-- ================================================================
      HERO
      ================================================================ -->
@@ -28,7 +18,7 @@
       Escritor argentino. Thriller psicológico rural. Realismo gótico bonaerense.
     </p>
     <div class="botones-grupo" data-aos="fade-up" data-aos-delay="800">
-      <a href="{{ .Site.BaseURL }}libros/" class="btn btn-primario">Ver los libros</a>
+      <a href="#obras" class="btn btn-primario">Ver los libros</a>
       <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Tienda online</a>
     </div>
   </div>
@@ -50,7 +40,7 @@
       </div>
       <div data-aos="fade-up" data-aos-delay="200">
         <span class="stat-numero" data-count="10">0</span>
-        <span class="stat-label">Audiocuentos</span>
+        <span class="stat-label">Cuentos</span>
       </div>
       <div data-aos="fade-up" data-aos-delay="300">
         <span class="stat-numero texto-brillo" data-count="1">0</span>
@@ -61,9 +51,9 @@
 </div>
 
 <!-- ================================================================
-     LIBROS
+     LAS OBRAS
      ================================================================ -->
-<section class="section section--oscura">
+<section class="section section--oscura" id="obras">
   <div class="container">
     <span class="etiqueta" data-aos="fade-right">Universo Quemado</span>
     <h2 data-aos="fade-up">Las obras</h2>
@@ -73,6 +63,7 @@
       <div class="libro-card libro-card--featured" data-aos="fade-up" data-aos-delay="100">
         <div class="libro-card__imagen">
           <img src="{{ .Site.BaseURL }}img/tapa-ebq.png" alt="El Boliche Quemado"
+               width="400" height="605" loading="lazy"
                onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:1rem;\'><svg width=\'48\' height=\'64\' viewBox=\'0 0 48 64\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'2\' y=\'2\' width=\'44\' height=\'60\' rx=\'3\' fill=\'%23221f1b\' stroke=\'%23c15c1e\' stroke-width=\'1\'/><text x=\'50%25\' y=\'42%25\' text-anchor=\'middle\' fill=\'%23c15c1e\' font-size=\'22\' font-family=\'serif\'>🔥</text></svg><span style=\'color:%23c15c1e;font-size:.75rem;letter-spacing:.08em;\'>EL BOLICHE QUEMADO</span></div>'">
         </div>
         <div class="libro-card__cuerpo">
@@ -86,7 +77,7 @@
           </div>
           <div class="botones-grupo">
             <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar</a>
-            <a href="{{ .Site.BaseURL }}libros/el-boliche-quemado/" class="btn btn-secundario">Ver más</a>
+            <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-secundario">Escuchar muestra</a>
           </div>
         </div>
       </div>
@@ -94,22 +85,55 @@
       <div class="libro-card" data-aos="fade-up" data-aos-delay="200">
         <div class="libro-card__imagen">
           <img src="{{ .Site.BaseURL }}img/tapa-cq.png" alt="Contexto Quemado"
+               width="400" height="400" loading="lazy"
                onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:1rem;\'><svg width=\'48\' height=\'64\' viewBox=\'0 0 48 64\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'2\' y=\'2\' width=\'44\' height=\'60\' rx=\'3\' fill=\'%23221f1b\' stroke=\'%23c15c1e\' stroke-width=\'1\'/><text x=\'50%25\' y=\'42%25\' text-anchor=\'middle\' fill=\'%23c15c1e\' font-size=\'22\' font-family=\'serif\'>📖</text></svg><span style=\'color:%23c15c1e;font-size:.75rem;letter-spacing:.08em;\'>CONTEXTO QUEMADO</span></div>'">
         </div>
         <div class="libro-card__cuerpo">
-          <span class="libro-card__genero">Cuentos · Ficción literaria de atmósfera</span>
+          <span class="libro-card__genero">Libro de cuentos cortos · Ficción literaria de atmósfera</span>
           <h3 class="libro-card__titulo">Contexto Quemado</h3>
           <p class="libro-card__subtitulo">Diez cuentos cortos que incineran</p>
           <p class="libro-card__sinopsis">Diez cuentos. Diez puertas. Cada relato es un umbral donde el dolor no se exhibe de manera obvia pero respira.</p>
           <div class="libro-card__formatos">
             <span class="formato-tag">Digital</span>
-            <span class="formato-tag">Audiocuentos</span>
+            <span class="formato-tag">Audiolibro</span>
           </div>
           <div class="botones-grupo">
             <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar</a>
-            <a href="{{ .Site.BaseURL }}libros/contexto-quemado/" class="btn btn-secundario">Ver más</a>
+            <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-secundario">Escuchar muestra</a>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     RESEÑAS
+     ================================================================ -->
+<section class="section section--media">
+  <div class="container">
+    <span class="etiqueta" data-aos="fade-right">Lectores reales · El Boliche Quemado</span>
+    <h2 data-aos="fade-up">Lo que dicen quienes lo leyeron</h2>
+    <div class="divisor"></div>
+    <div class="resenas-grid">
+
+      <div class="resena-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="resena-estrellas">★★★★★</div>
+        <p class="resena-texto">"Es atrapante desde el inicio y a medida que avanza la trama cambia completamente el panorama. La descripción tan rica de personajes, ambiente y suceso permiten poder imaginarse cada escena, como estar viendo una película. Super recomendado."</p>
+        <div class="resena-autor">Monica Fernández</div>
+      </div>
+
+      <div class="resena-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="resena-estrellas">★★★★★</div>
+        <p class="resena-texto">"Uno de los mejores libros de drama y misterio. Sientes cada personaje, cada lugar, cada situación como si estuvieras dentro de la historia. Cada evento totalmente inesperado. 100% recomendado para quienes incluso no son fanáticos del género."</p>
+        <div class="resena-autor">Valeria Burzi</div>
+      </div>
+
+      <div class="resena-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="resena-estrellas">★★★★★</div>
+        <p class="resena-texto">"Si estás buscando que un libro te estremezca, te conmueva y te sacuda hasta el alma, es éste. Maravilloso, una historia impactante; te deja ese sabor amargo de cuestionar si realmente todo es ficción o algo de verdad ocurrió."</p>
+        <div class="resena-autor">Daiana Molina</div>
       </div>
 
     </div>
@@ -129,38 +153,20 @@
 </section>
 
 <!-- ================================================================
-     AUDIOCUENTOS
-     ================================================================ -->
-<section class="section section--media">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;flex-wrap:wrap;">
-      <div>
-        <span class="etiqueta" data-aos="fade-right">Contexto Quemado</span>
-        <h2 data-aos="fade-up">Audiocuentos</h2>
-        <div class="divisor"></div>
-        <p data-aos="fade-up" data-aos-delay="100">Los diez cuentos de <em>Contexto Quemado</em> narrados en audio.<br>Cada uno es un umbral. Elegí por dónde entrar.</p>
-        <div class="botones-grupo" data-aos="fade-up" data-aos-delay="200">
-          <a href="{{ .Site.BaseURL }}audiocuentos/" class="btn btn-primario">Escuchar ahora</a>
-          <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Comprar libro</a>
-        </div>
-      </div>
-      <div data-aos="fade-left" data-aos-delay="200" style="opacity:.15;font-size:6rem;line-height:1;user-select:none;display:none;" class="decorativo-icono">🎧</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     AUDIOLIBRO
+     AUDIO
      ================================================================ -->
 <section class="section section--oscura">
   <div class="container">
-    <span class="etiqueta" data-aos="fade-right">El Boliche Quemado</span>
-    <h2 data-aos="fade-up">Audiolibro completo</h2>
+    <span class="etiqueta" data-aos="fade-right">Escuchá el Universo Quemado</span>
+    <h2 data-aos="fade-up">Audio</h2>
     <div class="divisor"></div>
-    <p data-aos="fade-up" data-aos-delay="100" style="max-width:560px;">La novela completa en audio. 20 capítulos narrados por el autor.<br>Escuchá el primer capítulo gratis.</p>
+    <p data-aos="fade-up" data-aos-delay="100" style="max-width:580px;">
+      <em>El Boliche Quemado</em> y <em>Contexto Quemado</em> narrados por <strong>Sebastián Cabello</strong>.
+      Una muestra gratuita de cada libro. Los audiolibros completos están incluidos con la compra del ejemplar.
+    </p>
     <div class="botones-grupo" data-aos="fade-up" data-aos-delay="200">
-      <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-primario">Escuchar capítulo 1</a>
-      <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Comprar acceso completo</a>
+      <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-primario">Escuchar muestras</a>
+      <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Comprar ejemplar</a>
     </div>
   </div>
 </section>
@@ -182,25 +188,72 @@
 </section>
 
 <!-- ================================================================
-     SOBRE EL AUTOR — mini
+     SOBRE EL AUTOR — mini con foto
      ================================================================ -->
 <section class="section section--media">
-  <div class="container" style="max-width:740px;">
-    <span class="etiqueta" data-aos="fade-right">El escritor</span>
-    <h2 data-aos="fade-up">Cristian Piscitelli</h2>
+  <div class="container">
+    <div class="sobre-mini-grid">
+      <div class="sobre-mini-foto" data-aos="fade-right">
+        <img src="/img/foto-autor-1.jpg" alt="Cristian Piscitelli, escritor argentino" width="543" height="724" loading="lazy">
+      </div>
+      <div data-aos="fade-up">
+        <span class="etiqueta">El escritor</span>
+        <h2>Escritor argentino de thriller psicológico rural</h2>
+        <div class="divisor"></div>
+        <p>
+          Escritor argentino nacido en Chacabuco, criado en Daireaux y radicado en Pehuajó.
+          Su obra se construye desde la pampa bonaerense: los silencios familiares, la violencia simbólica,
+          la memoria afectiva y la culpa acumulada.
+        </p>
+        <p>
+          No escribe desde la postal rural amable, sino desde el reverso: lo que el pueblo oculta,
+          lo que la familia disimula, lo que la moral pública ordena callar.
+        </p>
+        <div class="botones-grupo">
+          <a href="{{ .Site.BaseURL }}sobre/" class="btn btn-secundario">Leer más sobre el autor</a>
+          <a href="{{ .Site.BaseURL }}prensa/" class="btn btn-secundario">Prensa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     PRÓXIMA OBRA
+     ================================================================ -->
+<section class="section section--oscura">
+  <div class="container" style="max-width:800px;">
+    <span class="etiqueta" data-aos="fade-right">Universo Quemado</span>
+    <h2 data-aos="fade-up">Próxima obra</h2>
     <div class="divisor"></div>
-    <p data-aos="fade-up" data-aos-delay="100">
-      Escritor argentino nacido en Chacabuco, criado en Daireaux y radicado en Pehuajó.
-      Su obra se construye desde la pampa bonaerense: los silencios familiares, la violencia simbólica,
-      la memoria afectiva y la culpa acumulada.
-    </p>
-    <p data-aos="fade-up" data-aos-delay="150">
-      No escribe desde la postal rural amable, sino desde el reverso: lo que el pueblo oculta,
-      lo que la familia disimula, lo que la moral pública ordena callar.
-    </p>
-    <div class="botones-grupo" data-aos="fade-up" data-aos-delay="250">
-      <a href="{{ .Site.BaseURL }}sobre/" class="btn btn-secundario">Leer más sobre el autor</a>
-      <a href="{{ .Site.BaseURL }}prensa/" class="btn btn-secundario">Prensa y contacto</a>
+    <div class="proxima-obra-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="proxima-obra-badge">EN ESCRITURA</div>
+      <p>Luego de <em>El Boliche Quemado</em> y <em>Contexto Quemado</em>, el autor continúa expandiendo su universo narrativo: pueblos marcados por el silencio, personajes atravesados por la culpa, atmósferas rurales, tensión psicológica y esa oscuridad íntima donde lo cotidiano empieza a volverse inquietante.</p>
+      <p>El nuevo libro se encuentra actualmente en etapa de escritura y desarrollo editorial. Será una obra fiel a su identidad literaria: profunda, simbólica, incómoda y emocionalmente intensa.</p>
+      <p style="margin-bottom:0;">Muy pronto se compartirán avances, fragmentos, imágenes conceptuales y novedades del proceso creativo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     NEWSLETTER
+     ================================================================ -->
+<section class="section newsletter-seccion">
+  <div class="container" style="max-width:640px;text-align:center;">
+    <span class="etiqueta" data-aos="fade-up">Comunidad lectora</span>
+    <h2 data-aos="fade-up">Suscribite a las novedades</h2>
+    <div class="divisor" style="margin-left:auto;margin-right:auto;" data-aos="fade-up"></div>
+    <p data-aos="fade-up" data-aos-delay="100">Fragmentos inéditos, fechas de lanzamiento, novedades del universo. Sin spam.</p>
+    <form class="newsletter-form" id="newsletter-form" action="/newsletter-handler.php" method="POST" data-aos="fade-up" data-aos-delay="200">
+      <div class="newsletter-grupo">
+        <input type="email" name="email" class="newsletter-input" placeholder="tu@email.com" required autocomplete="email">
+        <button type="submit" class="btn btn-primario">Suscribirme</button>
+      </div>
+      <p class="newsletter-aviso">Solo novedades del Universo Quemado. Sin spam.</p>
+    </form>
+    <div id="newsletter-exito" style="display:none;margin-top:1.5rem;background:var(--grafito);border-left:3px solid var(--brasa);padding:1rem 1.5rem;border-radius:4px;text-align:left;">
+      <strong style="color:var(--crema);">¡Suscripción confirmada!</strong>
+      <p style="margin:0;font-size:.88rem;margin-top:.3rem;">Vas a recibir las novedades del Universo Quemado.</p>
     </div>
   </div>
 </section>
@@ -249,5 +302,34 @@
     </div>
   </div>
 </section>
+
+<script>
+(function() {
+  var form = document.getElementById('newsletter-form');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    fetch('/newsletter-handler.php', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.ok) {
+        form.style.display = 'none';
+        document.getElementById('newsletter-exito').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Suscribirme';
+      }
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Suscribirme';
+    });
+  });
+})();
+</script>
 
 {{ end }}

@@ -1,4 +1,4 @@
-baseURL = 'https://crispescritor.github.io/cpiscitelli-web/'
+baseURL = 'https://cpescritor.com/'
 locale = 'es-AR'
 title = 'Cristian Piscitelli — Escritor argentino · Universo Quemado'
 enableEmoji = false
@@ -6,7 +6,7 @@ enableRobotsTXT = true
 
 [params]
   description = "Cristian Piscitelli, escritor argentino de thriller psicológico rural. Autor de El Boliche Quemado y Contexto Quemado. Universo Quemado: narrativa de atmósfera, silencio y fuego."
-  keywords = "Cristian Piscitelli, Universo Quemado, El Boliche Quemado, Contexto Quemado, thriller psicológico rural, realismo gótico bonaerense, escritor argentino, audiolibro español, audiocuento, literatura argentina, novela bonaerense, cuentos cortos argentina, pampa bonaerense, narrativa argentina, libros Kindle, Sebastián Cabellio"
+  keywords = "Cristian Piscitelli, Universo Quemado, El Boliche Quemado, Contexto Quemado, thriller psicológico rural, realismo gótico bonaerense, escritor argentino, audiolibro español, audiocuento, literatura argentina, novela bonaerense, cuentos cortos argentina, pampa bonaerense, narrativa argentina, libros Kindle, Sebastián Cabello"
   author = "Cristian Piscitelli"
   tagline = "Lo que arde no siempre se ve. Pero siempre deja olor a humo."
   email = "cristian@cpescritor.com"
@@ -21,6 +21,7 @@ enableRobotsTXT = true
   goodreads = "https://www.goodreads.com/author/list/54354723.Cristian_Piscitelli"
   registro = "https://registrodeescritores.com.ar/project/cristian-piscitelli/"
   twitterSite = "@cpiscitelliescritor"
+  canonicalURL = "https://cpescritor.com"
 
 [sitemap]
   changefreq = "monthly"
@@ -31,36 +32,26 @@ enableRobotsTXT = true
   unsafe = true
 
 [[menus.main]]
-  name = "Libros"
-  url = "/libros/"
-  weight = 1
-
-[[menus.main]]
-  name = "Audiolibro"
+  name = "Audio"
   url = "/audiolibro/"
-  weight = 2
-
-[[menus.main]]
-  name = "Audiocuentos"
-  url = "/audiocuentos/"
-  weight = 3
+  weight = 1
 
 [[menus.main]]
   name = "Videos"
   url = "/videos/"
-  weight = 4
+  weight = 2
 
 [[menus.main]]
   name = "Sobre el autor"
   url = "/sobre/"
-  weight = 5
+  weight = 3
 
 [[menus.main]]
   name = "Contacto"
   url = "/contacto/"
-  weight = 6
+  weight = 4
 
 [[menus.main]]
   name = "Prensa"
   url = "/prensa/"
-  weight = 7
+  weight = 5

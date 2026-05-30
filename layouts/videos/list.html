@@ -3,59 +3,80 @@
   <div class="container">
     <span class="etiqueta">Universo Quemado</span>
     <h1>Videos</h1>
-    <p style="max-width:560px;margin-top:1rem;">Booktrailers, reels y piezas audiovisuales del Universo Quemado.</p>
+    <p style="max-width:560px;margin-top:1rem;">Booktrailers y piezas audiovisuales del Universo Quemado.</p>
   </div>
 </div>
 
 <div class="section">
-  <div class="container">
+  <div class="container" style="max-width:980px;">
 
-    <span class="etiqueta">El Boliche Quemado</span>
-    <h2>Booktrailers EBQ</h2>
-    <div class="divisor"></div>
-    <div class="video-grilla" style="margin-bottom:4rem;">
-      <div class="video-item">
-        <div class="video-item__player">
-          <video controls poster="/img/tapa-ebq.png">
-            <source src="/video/booktrailer-ebq.mp4" type="video/mp4">
-          </video>
+    <!-- ===== EBQ: sinopsis izquierda · reel derecha ===== -->
+    <div class="video-sinopsis-flex" data-aos="fade-up">
+      <div class="video-sinopsis-flex__texto">
+        <span class="etiqueta">Novela</span>
+        <h2>El Boliche Quemado</h2>
+        <div class="divisor"></div>
+        <p>En la Nueva Plata de los años sesenta, un boliche arde. El pueblo recuerda sin hablar, niega sin olvidar y conserva bajo la ceniza una verdad que nadie quiere pronunciar.</p>
+        <p style="font-size:.88rem;color:var(--gris);">Un thriller psicológico rural con atmósfera de realismo gótico bonaerense. La primera obra del Universo Quemado.</p>
+        <div class="botones-grupo">
+          <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar libro</a>
+          <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-secundario">Escuchar muestra</a>
         </div>
-        <div class="video-item__info">
-          <div class="video-item__tipo">Booktrailer oficial</div>
-          <div class="video-item__titulo">El Boliche Quemado</div>
+      </div>
+      <div class="video-sinopsis-flex__video">
+        <div class="video-item">
+          <div class="video-item__player">
+            <iframe
+              src="https://www.youtube.com/embed/ZlLNcR5SHP8?enablejsapi=1"
+              title="El Boliche Quemado — booktrailer"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-item__info">
+            <div class="video-item__tipo">Booktrailer oficial</div>
+            <div class="video-item__titulo">El Boliche Quemado</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <span class="etiqueta">Contexto Quemado</span>
-    <h2>Booktrailers CQ</h2>
-    <div class="divisor"></div>
-    <div class="video-grilla" style="margin-bottom:4rem;">
-      <div class="video-item">
-        <div class="video-item__player">
-          <video controls poster="/img/tapa-cq.png">
-            <source src="/video/booktrailer-cq.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="video-item__info">
-          <div class="video-item__tipo">Booktrailer oficial</div>
-          <div class="video-item__titulo">Contexto Quemado</div>
+    <!-- ===== CQ: reel izquierda · sinopsis derecha ===== -->
+    <div class="video-sinopsis-flex video-sinopsis-flex--invertido" data-aos="fade-up">
+      <div class="video-sinopsis-flex__texto">
+        <span class="etiqueta">Libro de cuentos cortos</span>
+        <h2>Contexto Quemado</h2>
+        <div class="divisor"></div>
+        <p>Diez cuentos. Diez puertas. Cada relato es un umbral donde el dolor no se exhibe de manera obvia pero respira. Una lectura acumulativa que deja marca.</p>
+        <p style="font-size:.88rem;color:var(--gris);">Diez combustiones breves del Universo Quemado. Una experiencia diferente a la novela, pero con la misma temperatura.</p>
+        <div class="botones-grupo">
+          <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar libro</a>
+          <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-secundario">Escuchar muestra</a>
         </div>
       </div>
-      <div class="video-item">
-        <div class="video-item__player">
-          <video controls poster="/img/og-image.png">
-            <source src="/video/promo-dos-libros.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="video-item__info">
-          <div class="video-item__tipo">Promoción</div>
-          <div class="video-item__titulo">Los dos libros del Universo Quemado</div>
+      <div class="video-sinopsis-flex__video">
+        <div class="video-item">
+          <div class="video-item__player">
+            <iframe
+              src="https://www.youtube.com/embed/vaPwqZXDngI?enablejsapi=1"
+              title="Contexto Quemado — Cristian Piscitelli"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-item__info">
+            <div class="video-item__tipo">Booktrailer oficial</div>
+            <div class="video-item__titulo">Contexto Quemado</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div style="text-align:center;padding:2rem 0;">
+    <div style="text-align:center;padding:3rem 0 1rem;">
       <p style="color:var(--gris);margin-bottom:1.5rem;">Más videos, reels y piezas del universo en YouTube y TikTok.</p>
       <div class="botones-grupo" style="justify-content:center;">
         <a href="{{ .Site.Params.youtube }}" class="btn btn-primario" target="_blank" rel="noopener">Ver canal de YouTube</a>
@@ -65,4 +86,24 @@
 
   </div>
 </div>
+<script>
+/* Exclusión mutua: pausar el otro video cuando uno empieza */
+(function(){
+  window.addEventListener('message', function(e){
+    if (!e.origin || e.origin.indexOf('youtube.com') === -1) return;
+    try {
+      var data = JSON.parse(e.data);
+      if (data.event === 'onStateChange' && data.info === 1) {
+        document.querySelectorAll('.video-item__player iframe').forEach(function(f){
+          if (f.contentWindow !== e.source) {
+            f.contentWindow.postMessage(
+              JSON.stringify({event:'command', func:'pauseVideo', args:''}), '*'
+            );
+          }
+        });
+      }
+    } catch(err){}
+  });
+})();
+</script>
 {{ end }}

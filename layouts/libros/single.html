@@ -3,7 +3,11 @@
   <div class="container">
     <div class="libro-page__header">
       <div class="libro-page__tapa">
-        <img src="{{ .Params.tapa }}" alt="{{ .Title }}"
+        <img src="{{ .Params.tapa }}"
+             alt="{{ .Title }}"
+             width="{{ with .Params.img_width }}{{ . }}{{ else }}400{{ end }}"
+             height="{{ with .Params.img_height }}{{ . }}{{ else }}600{{ end }}"
+             loading="lazy"
              onerror="this.parentElement.innerHTML='<div style=\'background:var(--grafito);height:100%;display:flex;align-items:center;justify-content:center;color:var(--gris);padding:1rem;text-align:center;\'>{{ .Title }}</div>'">
       </div>
       <div>

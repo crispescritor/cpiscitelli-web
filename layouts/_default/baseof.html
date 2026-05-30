@@ -4,6 +4,13 @@
   {{ partial "head.html" . }}
 </head>
 <body>
+  <div class="page-loader" id="page-loader">
+    <div class="loader-titulo">Universo Quemado</div>
+    <div class="loader-barra"><div class="loader-barra__relleno"></div></div>
+  </div>
+  <div class="reading-progress" id="reading-progress"></div>
+  <div class="cursor-punto"></div>
+  <div class="cursor-anillo"></div>
   {{ partial "header.html" . }}
   <main>
     {{ block "main" . }}{{ end }}

@@ -1,13 +1,17 @@
 ---
 title: "El Boliche Quemado"
-description: "Novela de thriller psicológico rural. Pampa bonaerense, años sesenta."
+description: "En la Nueva Plata de los años sesenta, un boliche arde y el pueblo elige callar. Novela de thriller psicológico rural. Disponible en digital, audiolibro y físico en cpescritor.com."
 tipo: "Novela · Thriller psicológico rural"
 isbn: "978-631-00-6801-5"
 genero: "Psicodrama · Ambiente rural · Thriller · Realismo gótico bonaerense"
 formatos: ["Digital", "Audiolibro", "Físico"]
-tapa: "/img/tapa-ebq.jpg"
+tapa: "/img/tapa-ebq.png"
+img_width: 400
+img_height: 605
 audio_url: ""
 audio_label: "Escuchá el primer capítulo"
+sitemap:
+  priority: 0.9
 ---
 
 En la Nueva Plata de los años sesenta, la vida parece obedecer a una rutina inalterable: los hombres trabajan, las mujeres callan y las historias incómodas se sepultan antes de volverse palabra. Pero un boliche marcado por copas, tangos, penumbras y secretos arde una noche, y con él parece quemarse algo más que madera.

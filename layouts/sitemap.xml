@@ -1,0 +1,22 @@
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {{- range .Data.Pages }}
+  {{- /* Excluir taxonomías vacías: categories y tags */}}
+  {{- if and (ne .Kind "taxonomy") (ne .Kind "term") }}
+  {{- if not (in (slice "categories" "tags") .Section) }}
+  {{- if not (and (eq .Kind "section") (in (slice "categories" "tags") .RelPermalink)) }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ .Lastmod.Format "2006-01-02" }}</lastmod>
+    {{- else }}
+    <lastmod>2026-05-28</lastmod>
+    {{- end }}
+    <changefreq>monthly</changefreq>
+    <priority>{{ .Sitemap.Priority }}</priority>
+  </url>
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+</urlset>

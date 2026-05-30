@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://crispescritor.github.io/cpiscitelli-web/sitemap.xml
+Sitemap: https://cpescritor.com/sitemap.xml

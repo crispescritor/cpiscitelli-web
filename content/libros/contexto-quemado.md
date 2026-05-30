@@ -1,14 +1,18 @@
 ---
 title: "Contexto Quemado"
-description: "Diez cuentos cortos que incineran. Ficción literaria de atmósfera."
+description: "Diez cuentos cortos de ficción literaria y thriller psicológico. Heridas que no cierran, cuerpos que hablan, casas que guardan. Cristian Piscitelli. Disponible en Kindle y audiocuentos."
 tipo: "Cuentos · Ficción literaria de atmósfera"
 isbn: "978-631-00-8019-2"
 genero: "Cuento · Thriller psicológico · Costumbrismo oscuro"
 subtitulo: "Diez cuentos cortos que incineran"
 formatos: ["Digital", "Audiocuentos"]
-tapa: "/img/tapa-cq.jpg"
+tapa: "/img/tapa-cq.png"
+img_width: 400
+img_height: 400
 audio_url: ""
 audio_label: "Escuchá una muestra"
+sitemap:
+  priority: 0.9
 ---
 
 *Contexto Quemado* reúne diez cuentos breves que no buscan solamente entretener, sino incomodar, acompañar y permanecer. Cada relato es un umbral: escenas donde el dolor no se exhibe de manera obvia pero respira; donde deseo, vergüenza, obediencia, pérdida y silencio funcionan como atmósferas.

@@ -23,7 +23,7 @@
         <span class="etiqueta">Enviá tu mensaje</span>
         <h2 style="margin-bottom:1.5rem;">Escribime</h2>
 
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contacto-form">
+        <form action="/form-handler.php" method="POST" id="contacto-form">
           <input type="hidden" name="_subject" value="Mensaje desde la web">
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -101,22 +101,11 @@
   var form = document.getElementById('contacto-form');
   if (!form) return;
   form.addEventListener('submit', function(e) {
-    var action = form.getAttribute('action') || '';
-    if (action.indexOf('YOUR_FORM_ID') !== -1) {
-      e.preventDefault();
-      var n = document.getElementById('nombre').value;
-      var em = document.getElementById('email').value;
-      var msg = document.getElementById('mensaje').value;
-      var subj = encodeURIComponent('Mensaje desde la web — ' + n);
-      var body = encodeURIComponent('Nombre: ' + n + '\nEmail: ' + em + '\n\nMensaje:\n' + msg);
-      window.location.href = 'mailto:{{ .Site.Params.email }}?subject=' + subj + '&body=' + body;
-      return;
-    }
     e.preventDefault();
     var btn = form.querySelector('button[type=submit]');
     btn.disabled = true;
     btn.textContent = 'Enviando...';
-    fetch(action, {
+    fetch('/form-handler.php', {
       method: 'POST',
       body: new FormData(form),
       headers: { 'Accept': 'application/json' }

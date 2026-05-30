@@ -1,6 +1,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+
+{{- /* ── TITLE: home usa el title completo del sitio; resto usa "Título — Cristian Piscitelli" ── */}}
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — Cristian Piscitelli{{ end }}</title>
+
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta name="keywords" content="{{ .Site.Params.keywords }}">
 <meta name="author" content="{{ .Site.Params.author }}">
@@ -12,24 +15,49 @@
 <link rel="alternate" hreflang="es" href="{{ .Permalink }}">
 <link rel="alternate" hreflang="es-AR" href="{{ .Permalink }}">
 
+{{- /* ── OG IMAGE: usa tapa del libro si existe, foto del autor en /sobre/, og-image en el resto ── */}}
+{{- $ogImage := printf "%s/img/og-image.png" .Site.Params.canonicalURL }}
+{{- $ogType  := "website" }}
+{{- if .Params.tapa }}
+  {{- $ogImage = printf "%s%s" .Site.Params.canonicalURL .Params.tapa }}
+  {{- $ogType = "book" }}
+{{- else if eq .Section "sobre" }}
+  {{- $ogImage = printf "%s/img/foto-autor-2.jpg" .Site.Params.canonicalURL }}
+  {{- $ogType = "profile" }}
+{{- else if not .IsHome }}
+  {{- $ogType = "article" }}
+{{- end }}
+
 <!-- Open Graph -->
-<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}">
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — Cristian Piscitelli{{ end }}">
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:type" content="{{ $ogType }}">
 <meta property="og:url" content="{{ .Permalink }}">
-<meta property="og:image" content="{{ .Site.BaseURL }}img/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Cristian Piscitelli — Universo Quemado">
+<meta property="og:image" content="{{ $ogImage }}">
+<meta property="og:image:secure_url" content="{{ $ogImage }}">
+<meta property="og:image:width" content="{{ if .Params.tapa }}{{ with .Params.img_width }}{{ . }}{{ else }}1200{{ end }}{{ else }}1200{{ end }}">
+<meta property="og:image:height" content="{{ if .Params.tapa }}{{ with .Params.img_height }}{{ . }}{{ else }}630{{ end }}{{ else }}630{{ end }}">
+<meta property="og:image:type" content="{{ if .Params.tapa }}image/png{{ else }}image/png{{ end }}">
+<meta property="og:image:alt" content="{{ if .IsHome }}Cristian Piscitelli — Universo Quemado{{ else }}{{ .Title }}{{ end }}">
 <meta property="og:site_name" content="Cristian Piscitelli — Universo Quemado">
 <meta property="og:locale" content="es_AR">
+{{- if eq .Section "sobre" }}
+<meta property="profile:first_name" content="Cristian">
+<meta property="profile:last_name" content="Piscitelli">
+<meta property="profile:username" content="cpiscitelliescritor">
+{{- end }}
+{{- if .Params.isbn }}
+<meta property="book:isbn" content="{{ .Params.isbn }}">
+<meta property="book:author" content="{{ .Site.Params.canonicalURL }}/sobre/">
+{{- end }}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="{{ .Site.Params.twitterSite }}">
-<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — Cristian Piscitelli{{ end }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<meta name="twitter:image" content="{{ .Site.BaseURL }}img/og-image.png">
+<meta name="twitter:image" content="{{ $ogImage }}">
+<meta name="twitter:image:alt" content="{{ if .IsHome }}Cristian Piscitelli — Universo Quemado{{ else }}{{ .Title }}{{ end }}">
 
 <!-- Favicon — Logo CiP -->
 <link rel="icon" type="image/png" href="{{ .Site.BaseURL }}img/logocp.png" sizes="any">
@@ -92,7 +120,7 @@
     "genre": ["Thriller Psicológico", "Realismo Gótico", "Literatura Argentina"],
     "description": "Un boliche incendiado, una historia que nadie quiere contar y un pueblo que parece saber más de lo que admite.",
     "publisher": { "@type": "Organization", "name": "Autopublicación" },
-    "url": "{{ .Site.BaseURL }}libros/"
+    "url": "{{ .Site.BaseURL }}libros/el-boliche-quemado/"
   },
   {
     "@context": "https://schema.org",
@@ -105,11 +133,73 @@
     "genre": ["Cuentos", "Thriller Psicológico", "Literatura Argentina"],
     "description": "Diez cuentos cortos que incineran. Diez umbrales. Diez combustiones breves.",
     "publisher": { "@type": "Organization", "name": "Autopublicación" },
-    "url": "{{ .Site.BaseURL }}libros/"
+    "url": "{{ .Site.BaseURL }}libros/contexto-quemado/"
   }
 ]
 </script>
 {{ end }}
 
+{{- /* ── Schema Book específico para páginas de libros ── */}}
+{{- if eq .Section "libros" }}
+{{- if .Params.isbn }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "{{ .Title }}",
+  "author": {
+    "@type": "Person",
+    "name": "Cristian Piscitelli",
+    "url": "{{ .Site.Params.canonicalURL }}/sobre/"
+  },
+  "isbn": "{{ .Params.isbn }}",
+  "inLanguage": "es",
+  "bookFormat": "EBook",
+  "genre": {{ if eq .Params.isbn "978-631-00-6801-5" }}["Thriller Psicológico", "Realismo Gótico", "Literatura Argentina"]{{ else }}["Cuentos Cortos", "Ficción Literaria", "Literatura Argentina"]{{ end }},
+  "image": "{{ .Site.Params.canonicalURL }}{{ .Params.tapa }}",
+  "url": "{{ .Permalink }}",
+  "description": "{{ .Description }}",
+  "publisher": { "@type": "Organization", "name": "Autopublicación" },
+  "workExample": [
+    {
+      "@type": "Book",
+      "bookFormat": "EBook",
+      "potentialAction": {
+        "@type": "ReadAction",
+        "target": { "@type": "EntryPoint", "urlTemplate": "{{ .Site.Params.amazon }}" }
+      }
+    }{{ if eq .Params.isbn "978-631-00-6801-5" }},
+    {
+      "@type": "Book",
+      "bookFormat": "AudiobookFormat",
+      "potentialAction": {
+        "@type": "ListenAction",
+        "target": { "@type": "EntryPoint", "urlTemplate": "{{ .Site.Params.canonicalURL }}/audiolibro/" }
+      }
+    }{{ end }}
+  ]
+}
+</script>
+{{- end }}
+{{- end }}
+
 <!-- Plausible Analytics (reemplazar dominio cuando esté disponible) -->
 <!-- <script defer data-domain="cpiscitelli.com" src="https://plausible.io/js/script.js"></script> -->
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '485603544542563');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=485603544542563&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->

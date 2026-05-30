@@ -161,6 +161,18 @@
   }
 
   /* ------------------------------------------------
+     10. READING PROGRESS BAR
+     ------------------------------------------------ */
+  var progressBar = document.getElementById('reading-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', function() {
+      var scrolled = window.scrollY;
+      var total = document.body.scrollHeight - window.innerHeight;
+      progressBar.style.transform = total > 0 ? 'scaleX(' + (scrolled / total) + ')' : 'scaleX(0)';
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------------
      9. EMBER PARTICLES — canvas
      ------------------------------------------------ */
   var canvas = document.getElementById('particulas-canvas');
