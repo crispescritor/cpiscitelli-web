@@ -27,7 +27,7 @@
         </div>
         {{ end }}
         <h2 class="novedad-card__titulo">
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
+          <a href="{{ .Permalink }}" target="_blank" rel="noopener">{{ .Title }}</a>
         </h2>
         {{ with .Description }}
         <p class="novedad-card__desc">{{ . }}</p>
@@ -37,7 +37,7 @@
           <span class="formato-tag">🎧 Audiocuento</span>
         </div>
         {{ end }}
-        <a href="{{ .Permalink }}" class="novedad-card__leer">Leer más →</a>
+        <a href="{{ .Permalink }}" class="novedad-card__leer" target="_blank" rel="noopener">Leer más →</a>
       </article>
       {{ end }}
     </div>

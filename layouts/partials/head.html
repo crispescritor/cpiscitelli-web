@@ -24,6 +24,13 @@
 {{- else if eq .Section "sobre" }}
   {{- $ogImage = printf "%s/img/foto-autor-2.jpg" .Site.Params.canonicalURL }}
   {{- $ogType = "profile" }}
+{{- else if eq .Section "novedades" }}
+  {{- $ogType = "article" }}
+  {{- if .Params.imagen }}
+    {{- $ogImage = printf "%s%s" .Site.Params.canonicalURL .Params.imagen }}
+  {{- else if .Params.youtube_id }}
+    {{- $ogImage = printf "https://img.youtube.com/vi/%s/maxresdefault.jpg" .Params.youtube_id }}
+  {{- end }}
 {{- else if not .IsHome }}
   {{- $ogType = "article" }}
 {{- end }}
