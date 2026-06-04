@@ -5,7 +5,7 @@ tipo: "Novela · Thriller psicológico rural"
 isbn: "978-631-00-6801-5"
 genero: "Psicodrama · Ambiente rural · Thriller · Realismo gótico bonaerense"
 formatos: ["Digital", "Audiolibro", "Físico"]
-tapa: "/img/tapa-ebq.png"
+tapa: "/img/tapa-ebq.webp"
 img_width: 400
 img_height: 605
 audio_url: ""
