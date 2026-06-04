@@ -26,7 +26,9 @@
   {{- $ogType = "profile" }}
 {{- else if eq .Section "novedades" }}
   {{- $ogType = "article" }}
-  {{- if .Params.imagen }}
+  {{- if .Params.thumbnail }}
+    {{- $ogImage = printf "%s%s" .Site.Params.canonicalURL .Params.thumbnail }}
+  {{- else if .Params.imagen }}
     {{- $ogImage = printf "%s%s" .Site.Params.canonicalURL .Params.imagen }}
   {{- else if .Params.youtube_id }}
     {{- $ogImage = printf "https://img.youtube.com/vi/%s/maxresdefault.jpg" .Params.youtube_id }}

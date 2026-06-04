@@ -15,15 +15,24 @@
           <span class="novedad-tipo">{{ .Params.tipo | default "Texto" }}</span>
           <time class="novedad-fecha">{{ .Date.Format "02.01.2006" }}</time>
         </div>
-        {{ if .Params.imagen }}
+        {{- /* Thumbnail: thumbnail extraído > imagen > youtube > video placeholder */}}
+        {{ if .Params.thumbnail }}
+        <div class="novedad-card__thumb">
+          <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy">
+          {{ if or .Params.video_url .Params.youtube_id }}<span class="novedad-play-icon">▶</span>{{ end }}
+        </div>
+        {{ else if .Params.imagen }}
         <div class="novedad-card__imagen">
           <img src="{{ .Params.imagen }}" alt="{{ .Title }}" loading="lazy">
         </div>
-        {{ end }}
-        {{ if .Params.youtube_id }}
+        {{ else if .Params.youtube_id }}
         <div class="novedad-card__thumb">
           <img src="https://img.youtube.com/vi/{{ .Params.youtube_id }}/mqdefault.jpg" alt="{{ .Title }}" loading="lazy">
           <span class="novedad-play-icon">▶</span>
+        </div>
+        {{ else if .Params.video_url }}
+        <div class="novedad-card__thumb novedad-card__thumb--placeholder">
+          <span class="novedad-play-icon" style="font-size:2rem;opacity:.6;">▶</span>
         </div>
         {{ end }}
         <h2 class="novedad-card__titulo">
