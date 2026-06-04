@@ -1,0 +1,45 @@
+{{- /* CTA Novedades — incluir en secciones clave */ -}}
+<section class="section cta-novedades" data-aos="fade-up">
+  <div class="container">
+    <div class="cta-novedades__inner">
+      <div class="cta-novedades__texto">
+        <span class="etiqueta">Universo Quemado</span>
+        <h2 class="cta-novedades__titulo">Nuevos textos, audios y más</h2>
+        <p class="cta-novedades__desc">Fragmentos inéditos, audiocuentos, videos y novedades del universo que sigue ardiendo.</p>
+      </div>
+      <a href="{{ .Site.BaseURL }}novedades/" class="btn btn-primario cta-novedades__btn">
+        Ver novedades →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+.cta-novedades { padding: 2.5rem 0; }
+.cta-novedades__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: var(--grafito);
+  border: 1px solid rgba(193,92,30,0.2);
+  border-left: 4px solid var(--brasa);
+  border-radius: 8px;
+  padding: 1.75rem 2rem;
+}
+@media (max-width: 640px) {
+  .cta-novedades__inner { flex-direction: column; align-items: flex-start; }
+}
+.cta-novedades__titulo {
+  font-size: 1.25rem;
+  margin: .25rem 0 .4rem;
+  color: var(--crema);
+}
+.cta-novedades__desc {
+  font-size: .88rem;
+  color: var(--gris);
+  margin: 0;
+  max-width: 480px;
+}
+.cta-novedades__btn { white-space: nowrap; }
+</style>
