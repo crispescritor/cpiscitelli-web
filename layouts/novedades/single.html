@@ -242,6 +242,58 @@
   </div>
 </article>
 
+{{- /* ── Posts relacionados ── */}}
+{{- $otros := where .Site.RegularPages "Section" "novedades" }}
+{{- $otros  = where $otros "Permalink" "ne" .Permalink }}
+{{- $otros  = $otros.ByDate.Reverse }}
+{{- if ge (len $otros) 1 }}
+<section class="section relacionados-seccion">
+  <div class="container">
+    <span class="etiqueta" data-aos="fade-right">Seguí leyendo</span>
+    <h2 class="relacionados-titulo" data-aos="fade-up">Otras novedades</h2>
+    <div class="divisor"></div>
+    <div class="relacionados-grid">
+      {{- range first 3 $otros }}
+      <a href="{{ .Permalink }}" class="relacionado-card" target="_blank" rel="noopener" data-aos="fade-up">
+
+        {{- /* Thumbnail: YouTube > imagen > tipo */}}
+        <div class="relacionado-card__thumb">
+          {{- if .Params.youtube_id }}
+            <img src="https://img.youtube.com/vi/{{ .Params.youtube_id }}/mqdefault.jpg"
+                 alt="{{ .Title }}" loading="lazy">
+          {{- else if .Params.imagen }}
+            <img src="{{ .Params.imagen }}" alt="{{ .Title }}" loading="lazy">
+          {{- else if .Params.galeria }}
+            <img src="{{ index .Params.galeria 0 }}" alt="{{ .Title }}" loading="lazy">
+          {{- else }}
+            <div class="relacionado-card__thumb-placeholder">
+              {{- if eq .Params.tipo "Audiocuento" }}🎧
+              {{- else if eq .Params.tipo "Video" }}▶
+              {{- else }}✦{{ end }}
+            </div>
+          {{- end }}
+          <div class="relacionado-card__thumb-overlay"></div>
+        </div>
+
+        <div class="relacionado-card__body">
+          <div class="relacionado-card__meta">
+            <span class="relacionado-tipo">{{ .Params.tipo | default "Texto" }}</span>
+            <time class="relacionado-fecha">{{ .Date.Format "02.01.2006" }}</time>
+          </div>
+          <h3 class="relacionado-card__titulo">{{ .Title }}</h3>
+          {{- with .Description }}
+          <p class="relacionado-card__desc">{{ . | truncate 90 "…" }}</p>
+          {{- end }}
+          <span class="relacionado-card__leer">Leer →</span>
+        </div>
+
+      </a>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{- end }}
+
 <style>
 /* ── Breadcrumb ── */
 .novedad-breadcrumb { margin-bottom: 1.5rem; }
@@ -361,6 +413,128 @@
 .novedad-nav a { font-size: .82rem; color: var(--gris); text-decoration: none; transition: color .2s; max-width: 45%; }
 .novedad-nav a:hover { color: var(--brasa); }
 .novedad-nav__siguiente { text-align: right; margin-left: auto; }
+</style>
+
+<style>
+/* ── Posts relacionados ── */
+.relacionados-seccion {
+  background: var(--carbon);
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding-top: 3rem;
+  padding-bottom: 3.5rem;
+}
+.relacionados-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: var(--crema);
+}
+.relacionados-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+@media (max-width: 860px) { .relacionados-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .relacionados-grid { grid-template-columns: 1fr; } }
+
+/* Card */
+.relacionado-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--grafito);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.05);
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+.relacionado-card:hover {
+  border-color: rgba(193,92,30,.35);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.4);
+}
+
+/* Thumbnail */
+.relacionado-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--negro);
+}
+.relacionado-card__thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .4s ease, filter .4s ease;
+}
+.relacionado-card:hover .relacionado-card__thumb img {
+  transform: scale(1.06);
+  filter: brightness(.75);
+}
+.relacionado-card__thumb-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,12,11,.7) 0%, transparent 50%);
+}
+.relacionado-card__thumb-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--grafito), var(--negro));
+  color: var(--brasa);
+}
+
+/* Body */
+.relacionado-card__body {
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: .35rem;
+}
+.relacionado-card__meta {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.relacionado-tipo {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--brasa);
+  background: rgba(193,92,30,.1);
+  padding: .15rem .5rem;
+  border-radius: 3px;
+}
+.relacionado-fecha {
+  font-size: .7rem;
+  color: var(--gris);
+}
+.relacionado-card__titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--crema);
+  margin: 0;
+  transition: color .2s;
+}
+.relacionado-card:hover .relacionado-card__titulo { color: var(--brasa-claro); }
+.relacionado-card__desc {
+  font-size: .82rem;
+  color: var(--gris);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+.relacionado-card__leer {
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--brasa);
+  letter-spacing: .05em;
+  margin-top: .25rem;
+  transition: opacity .2s;
+}
+.relacionado-card:hover .relacionado-card__leer { opacity: .75; }
 </style>
 
 <script>
