@@ -1,0 +1,183 @@
+{{ define "main" }}
+<article class="section novedad-single">
+  <div class="container" style="max-width:760px;">
+
+    <!-- Breadcrumb -->
+    <div class="novedad-breadcrumb">
+      <a href="{{ .Site.BaseURL }}novedades/">← Novedades</a>
+    </div>
+
+    <!-- Meta -->
+    <div class="novedad-single__meta">
+      <span class="novedad-tipo">{{ .Params.tipo | default "Texto" }}</span>
+      <time class="novedad-fecha">{{ .Date.Format "02 de January de 2006" }}</time>
+    </div>
+
+    <!-- Título -->
+    <h1 data-aos="fade-up">{{ .Title }}</h1>
+    <div class="divisor"></div>
+
+    <!-- IMAGEN -->
+    {{ if .Params.imagen }}
+    <figure class="novedad-single__figura" data-aos="fade-up">
+      <img src="{{ .Params.imagen }}" alt="{{ .Title }}" loading="lazy"
+           style="width:100%;border-radius:6px;margin-bottom:1.5rem;">
+    </figure>
+    {{ end }}
+
+    <!-- YOUTUBE EMBED -->
+    {{ if .Params.youtube_id }}
+    <div class="novedad-single__video" data-aos="fade-up">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/{{ .Params.youtube_id }}"
+          title="{{ .Title }}"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- VIDEO ARCHIVO -->
+    {{ if .Params.video_url }}
+    <div class="novedad-single__video" data-aos="fade-up">
+      <div class="video-wrapper">
+        <video controls style="width:100%;border-radius:6px;">
+          <source src="{{ .Params.video_url }}">
+        </video>
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- AUDIO -->
+    {{ if .Params.audio_url }}
+    <div class="novedad-single__audio" data-aos="fade-up">
+      <span class="etiqueta">{{ .Params.audio_label | default "Escuchá" }}</span>
+      <audio controls style="width:100%;margin-top:.75rem;accent-color:var(--brasa);">
+        <source src="{{ .Params.audio_url }}" type="audio/mpeg">
+      </audio>
+    </div>
+    {{ end }}
+
+    <!-- CONTENIDO -->
+    <div class="novedad-single__cuerpo prose" data-aos="fade-up">
+      {{ .Content }}
+    </div>
+
+    <!-- Compartir -->
+    <div class="novedad-single__compartir">
+      <span style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);">Compartir</span>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener" class="btn btn-secundario" style="font-size:.8rem;padding:.4rem 1rem;">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?text={{ .Title | urlquery }}&url={{ .Permalink }}" target="_blank" rel="noopener" class="btn btn-secundario" style="font-size:.8rem;padding:.4rem 1rem;">Twitter / X</a>
+    </div>
+
+    <!-- Navegación entre posts -->
+    <nav class="novedad-nav">
+      {{ with .PrevInSection }}
+      <a href="{{ .Permalink }}" class="novedad-nav__anterior">← {{ .Title }}</a>
+      {{ end }}
+      {{ with .NextInSection }}
+      <a href="{{ .Permalink }}" class="novedad-nav__siguiente">{{ .Title }} →</a>
+      {{ end }}
+    </nav>
+
+  </div>
+</article>
+
+<style>
+.novedad-breadcrumb {
+  margin-bottom: 1.5rem;
+}
+.novedad-breadcrumb a {
+  font-size: .8rem;
+  color: var(--gris);
+  text-decoration: none;
+  letter-spacing: .05em;
+  transition: color .2s;
+}
+.novedad-breadcrumb a:hover { color: var(--brasa); }
+.novedad-single__meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: .75rem;
+}
+.novedad-tipo {
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--brasa);
+}
+.novedad-fecha {
+  font-size: .78rem;
+  color: var(--gris);
+}
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+}
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+.novedad-single__audio {
+  background: var(--grafito);
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  border-left: 3px solid var(--brasa);
+}
+.novedad-single__cuerpo {
+  margin-top: 1.5rem;
+  line-height: 1.8;
+  font-size: 1rem;
+  color: var(--crema-suave);
+}
+.novedad-single__cuerpo p { margin-bottom: 1.2rem; }
+.novedad-single__cuerpo h2 { color: var(--crema); margin: 1.5rem 0 .75rem; }
+.novedad-single__cuerpo h3 { color: var(--crema); margin: 1.25rem 0 .5rem; }
+.novedad-single__cuerpo a { color: var(--brasa); }
+.novedad-single__cuerpo blockquote {
+  border-left: 3px solid var(--brasa);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--gris);
+}
+.novedad-single__compartir {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.novedad-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.07);
+  gap: 1rem;
+}
+.novedad-nav a {
+  font-size: .82rem;
+  color: var(--gris);
+  text-decoration: none;
+  transition: color .2s;
+  max-width: 45%;
+}
+.novedad-nav a:hover { color: var(--brasa); }
+.novedad-nav__siguiente { text-align: right; margin-left: auto; }
+</style>
+{{ end }}

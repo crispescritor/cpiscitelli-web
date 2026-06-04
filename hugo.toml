@@ -32,6 +32,11 @@ enableRobotsTXT = true
   unsafe = true
 
 [[menus.main]]
+  name = "Novedades"
+  url = "/novedades/"
+  weight = 0
+
+[[menus.main]]
   name = "Audio"
   url = "/audiolibro/"
   weight = 1
