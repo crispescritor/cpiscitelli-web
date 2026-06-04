@@ -84,6 +84,125 @@
 
     </div><!-- /novedad-layout -->
 
+    <!-- Galería de fotos -->
+    {{- if .Params.galeria }}
+    <div class="novedad-galeria" data-aos="fade-up">
+      <div class="novedad-galeria__header">
+        <span class="etiqueta">Galería</span>
+        <span class="novedad-galeria__count">{{ len .Params.galeria }} fotos</span>
+      </div>
+      <div class="novedad-galeria__grid">
+        {{- range $i, $img := .Params.galeria }}
+        <a href="{{ $img }}" class="galeria-item" onclick="abrirLightbox({{ $i }}); return false;">
+          <img src="{{ $img }}" alt="Foto {{ add $i 1 }}" loading="lazy">
+          <div class="galeria-item__overlay">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+          </div>
+        </a>
+        {{- end }}
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
+      <button class="lightbox__cerrar" onclick="cerrarLightbox()">✕</button>
+      <button class="lightbox__prev" onclick="event.stopPropagation(); moverLightbox(-1)">‹</button>
+      <div class="lightbox__contenido" onclick="event.stopPropagation()">
+        <img id="lightboxImg" src="" alt="">
+        <div id="lightboxCounter" class="lightbox__counter"></div>
+      </div>
+      <button class="lightbox__next" onclick="event.stopPropagation(); moverLightbox(1)">›</button>
+    </div>
+
+    <script>
+    const __galeria = [{{ range .Params.galeria }}"{{ . }}",{{ end }}];
+    let __lightboxIdx = 0;
+    function abrirLightbox(i) {
+      __lightboxIdx = i;
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightboxImg').src = __galeria[i];
+      document.getElementById('lightboxCounter').textContent = (i+1) + ' / ' + __galeria.length;
+      lb.classList.add('activo');
+      document.body.style.overflow = 'hidden';
+    }
+    function cerrarLightbox() {
+      document.getElementById('lightbox').classList.remove('activo');
+      document.body.style.overflow = '';
+    }
+    function moverLightbox(dir) {
+      __lightboxIdx = (__lightboxIdx + dir + __galeria.length) % __galeria.length;
+      document.getElementById('lightboxImg').src = __galeria[__lightboxIdx];
+      document.getElementById('lightboxCounter').textContent = (__lightboxIdx+1) + ' / ' + __galeria.length;
+    }
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('activo')) return;
+      if (e.key === 'ArrowRight') moverLightbox(1);
+      if (e.key === 'ArrowLeft')  moverLightbox(-1);
+      if (e.key === 'Escape')     cerrarLightbox();
+    });
+    </script>
+
+    <style>
+    .novedad-galeria { margin: 2.5rem 0; }
+    .novedad-galeria__header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+    .novedad-galeria__count  { font-size:.72rem; color:var(--gris); }
+    .novedad-galeria__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: .75rem;
+    }
+    @media (max-width:600px) {
+      .novedad-galeria__grid { grid-template-columns: repeat(2, 1fr); gap:.5rem; }
+    }
+    .galeria-item {
+      display: block; position: relative;
+      aspect-ratio: 1; overflow: hidden;
+      border-radius: 6px; cursor: pointer;
+      background: var(--grafito);
+    }
+    .galeria-item img {
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition: transform .4s ease, filter .4s ease;
+    }
+    .galeria-item__overlay {
+      position: absolute; inset:0;
+      background: rgba(13,12,11,.5);
+      display: flex; align-items:center; justify-content:center;
+      color: var(--crema); opacity:0;
+      transition: opacity .3s;
+    }
+    .galeria-item:hover img            { transform: scale(1.05); filter: brightness(.8); }
+    .galeria-item:hover .galeria-item__overlay { opacity:1; }
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset:0; z-index:9999;
+      background: rgba(13,12,11,.96);
+      display: none; align-items:center; justify-content:center;
+    }
+    .lightbox.activo { display:flex; }
+    .lightbox__contenido { position:relative; max-width:90vw; max-height:90vh; text-align:center; }
+    .lightbox__contenido img { max-width:90vw; max-height:85vh; border-radius:6px; object-fit:contain; display:block; }
+    .lightbox__counter { font-size:.78rem; color:var(--gris); margin-top:.5rem; }
+    .lightbox__cerrar {
+      position:absolute; top:1.5rem; right:1.5rem;
+      background:none; border:none; color:var(--crema);
+      font-size:1.8rem; cursor:pointer; z-index:10;
+      transition: color .2s;
+    }
+    .lightbox__cerrar:hover { color:var(--brasa); }
+    .lightbox__prev, .lightbox__next {
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(255,255,255,.08); border:none; color:var(--crema);
+      font-size:2.5rem; padding:.2rem .8rem; border-radius:4px;
+      cursor:pointer; transition: background .2s; z-index:10;
+    }
+    .lightbox__prev { left:1rem; }
+    .lightbox__next { right:1rem; }
+    .lightbox__prev:hover, .lightbox__next:hover { background:rgba(193,92,30,.4); }
+    </style>
+    {{- end }}
+
     <!-- Share -->
     <div class="novedad-compartir">
       <span class="compartir-label">Compartir</span>
