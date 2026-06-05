@@ -33,11 +33,35 @@
       </div>
     </div>
 
+    <!-- Biografía -->
     <div style="margin-top:4rem;">
-      <span class="etiqueta">Datos de referencia</span>
-      <h2>El autor en una línea</h2>
+      <span class="etiqueta">Biografía</span>
+      <h2>Sobre el autor</h2>
       <div class="divisor"></div>
       <blockquote class="cita-autoral">"Cristian Piscitelli escribe historias donde lo que arde no siempre se ve, pero siempre deja olor a humo."</blockquote>
+      <p style="margin-top:1.5rem;">Escritor argentino nacido el 27 de abril de 1981 en Chacabuco, provincia de Buenos Aires. Criado en Daireaux y radicado en Pehuajó. Su narrativa construye atmósferas desde la pampa bonaerense: los silencios familiares, la violencia simbólica, la memoria afectiva y la culpa acumulada.</p>
+      <p><strong>Categoría:</strong> Thriller psicológico rural · Realismo gótico bonaerense · Costumbrismo oscuro</p>
+    </div>
+
+    <!-- Obras -->
+    <div style="margin-top:3rem;">
+      <span class="etiqueta">Obras publicadas</span>
+      <h2>Bibliografía</h2>
+      <div class="divisor"></div>
+      <div class="prensa-grid">
+        <div class="prensa-item">
+          <h3>El Boliche Quemado <span style="font-size:.75rem;font-weight:400;color:var(--gris);">Novela, 2024</span></h3>
+          <p style="font-size:.82rem;color:var(--gris);margin:.25rem 0 .75rem;">ISBN 978-631-00-6801-5 · Digital · Audiolibro · Físico</p>
+          <p>En la Nueva Plata de los años sesenta, un boliche incendiado desata una historia que el pueblo eligió no contar. Memoria inestable, masculinidad herida, mujer bajo mandato.</p>
+          <a href="{{ .Site.BaseURL }}libros/el-boliche-quemado/" class="btn btn-secundario" style="font-size:.82rem;margin-top:.75rem;">Ver página del libro</a>
+        </div>
+        <div class="prensa-item">
+          <h3>Contexto Quemado <span style="font-size:.75rem;font-weight:400;color:var(--gris);">Cuentos, 2024</span></h3>
+          <p style="font-size:.82rem;color:var(--gris);margin:.25rem 0 .75rem;">ISBN 978-631-00-8019-2 · Digital · Audiocuentos</p>
+          <p>Diez cuentos cortos que incineran. Diez umbrales donde el dolor no se exhibe de manera obvia pero respira. Heridas que no cierran, cuerpos que hablan, casas que guardan.</p>
+          <a href="{{ .Site.BaseURL }}libros/contexto-quemado/" class="btn btn-secundario" style="font-size:.82rem;margin-top:.75rem;">Ver página del libro</a>
+        </div>
+      </div>
     </div>
 
     <div style="margin-top:3rem;">
@@ -58,4 +82,127 @@
 
   </div>
 </div>
+
+{{/* ── EN LOS MEDIOS ─────────────────────────────────────────── */}}
+{{- $medios := where .Site.RegularPages "Section" "enlosmedios" }}
+{{- $medios  = $medios.ByDate.Reverse }}
+{{- if $medios }}
+<section class="section section--oscura" id="en-los-medios">
+  <div class="container">
+    <span class="etiqueta" data-aos="fade-right">Cobertura mediática</span>
+    <h2 data-aos="fade-up">En los medios</h2>
+    <div class="divisor"></div>
+
+    <div class="medios-lista">
+      {{- range $medios }}
+      {{- $tipoIcono := dict "prensa" "📰" "radio" "🎙️" "podcast" "🎧" "tv" "📺" "digital" "💻" "redes" "📱" "resena" "⭐" }}
+      {{- $icono := index $tipoIcono (.Params.tipo | lower) | default "📎" }}
+      {{- $tieneMedia := or .Params.imagen .Params.video_url .Params.audio_url .Params.youtube_id }}
+
+      {{- if $tieneMedia }}
+      {{/* Card completa para ítems con archivo */}}
+      <a href="{{ .Permalink }}" class="medio-card" target="_blank" rel="noopener" data-aos="fade-up">
+        <div class="medio-card__thumb">
+          {{- if .Params.thumbnail }}
+          <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy">
+          {{- else if .Params.youtube_id }}
+          <img src="https://img.youtube.com/vi/{{ .Params.youtube_id }}/mqdefault.jpg" alt="{{ .Title }}" loading="lazy">
+          {{- else if .Params.imagen }}
+          <img src="{{ .Params.imagen }}" alt="{{ .Title }}" loading="lazy">
+          {{- else }}
+          <div class="medio-card__thumb-icon">{{ $icono }}</div>
+          {{- end }}
+          <span class="medio-tipo-badge">{{ .Params.tipo | upper }}</span>
+        </div>
+        <div class="medio-card__body">
+          <p class="medio-cita">{{ .Params.medio }}{{ with .Params.medio }} · {{ end }}{{ .Date.Format "02 de January de 2006" }}</p>
+          <h3 class="medio-card__titulo">{{ .Title }}</h3>
+          {{- with .Description }}<p class="medio-extracto">{{ . | truncate 120 "…" }}</p>{{- end }}
+        </div>
+      </a>
+
+      {{- else }}
+      {{/* Ítem compacto para links externos */}}
+      <div class="medio-link-item" data-aos="fade-up">
+        <span class="medio-link-icono">{{ $icono }}</span>
+        <div class="medio-link-contenido">
+          <div class="medio-link-header">
+            <span class="medio-link-cita">{{ .Params.medio }}{{ with .Params.medio }} · {{ end }}{{ .Date.Format "02 de January de 2006" }}</span>
+            {{- with .Params.url_externa }}
+            <a href="{{ . }}" target="_blank" rel="noopener" class="medio-link-externo">↗</a>
+            {{- end }}
+          </div>
+          {{- if .Params.url_externa }}
+          <a href="{{ .Params.url_externa }}" target="_blank" rel="noopener" class="medio-link-titulo">{{ .Title }}</a>
+          {{- else }}
+          <span class="medio-link-titulo">{{ .Title }}</span>
+          {{- end }}
+          {{- with .Description }}<p class="medio-extracto-sm">{{ . | truncate 140 "…" }}</p>{{- end }}
+          {{- if .Params.thumbnail }}
+          <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy" class="medio-link-thumb">
+          {{- end }}
+        </div>
+      </div>
+      {{- end }}
+      {{- end }}
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* ── En los medios ── */
+.medios-lista {
+  display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem;
+}
+
+/* Card para archivos */
+.medio-card {
+  display: grid; grid-template-columns: 200px 1fr; gap: 1.5rem;
+  background: var(--grafito); border-radius: 8px; overflow: hidden;
+  text-decoration: none; border: 1px solid rgba(255,255,255,.05);
+  transition: border-color .3s, transform .3s;
+}
+.medio-card:hover { border-color: rgba(193,92,30,.35); transform: translateX(4px); }
+@media(max-width:600px){ .medio-card { grid-template-columns: 1fr; } }
+.medio-card__thumb { position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--negro); }
+.medio-card__thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s; }
+.medio-card:hover .medio-card__thumb img { transform:scale(1.05); }
+.medio-card__thumb-icon { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
+.medio-tipo-badge {
+  position:absolute; top:.5rem; left:.5rem;
+  font-size:.6rem; font-weight:700; letter-spacing:.1em;
+  background:rgba(193,92,30,.9); color:var(--crema);
+  padding:.15rem .5rem; border-radius:3px;
+}
+.medio-card__body { padding:1.25rem 1.25rem 1.25rem 0; display:flex; flex-direction:column; justify-content:center; }
+@media(max-width:600px){ .medio-card__body { padding:1rem; } }
+
+/* Ítem compacto para links */
+.medio-link-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.1rem 1.25rem;
+  background: var(--grafito); border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.05);
+  border-left: 3px solid var(--brasa);
+  transition: border-color .2s;
+}
+.medio-link-item:hover { border-color: rgba(193,92,30,.5); }
+.medio-link-icono { font-size: 1.4rem; flex-shrink:0; margin-top:.1rem; }
+.medio-link-contenido { flex: 1; min-width:0; }
+.medio-link-header { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.3rem; }
+.medio-link-cita { font-size:.72rem; color:var(--gris); font-weight:500; letter-spacing:.04em; }
+.medio-link-externo { color:var(--brasa); text-decoration:none; font-size:.9rem; font-weight:700; flex-shrink:0; }
+.medio-link-titulo { font-family:'Playfair Display',serif; font-size:1rem; color:var(--crema); text-decoration:none; font-weight:700; line-height:1.3; display:block; transition:color .2s; }
+a.medio-link-titulo:hover { color:var(--brasa-claro); }
+.medio-extracto-sm { font-size:.82rem; color:var(--gris); line-height:1.55; margin-top:.4rem; }
+.medio-link-thumb { width:100%; max-height:180px; object-fit:cover; border-radius:4px; margin-top:.75rem; }
+
+/* Compartidos */
+.medio-cita { font-size:.72rem; color:var(--brasa); font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.4rem; }
+.medio-card__titulo { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--crema); font-weight:700; line-height:1.3; margin-bottom:.4rem; }
+.medio-extracto { font-size:.85rem; color:var(--gris); line-height:1.55; }
+</style>
+{{- end }}
+
 {{ end }}

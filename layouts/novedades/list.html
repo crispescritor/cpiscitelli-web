@@ -5,6 +5,11 @@
     <h1 data-aos="fade-up">Novedades</h1>
     <div class="divisor"></div>
 
+    <p class="novedades-intro" data-aos="fade-up">
+      Fragmentos inéditos, audiocuentos, videos, imágenes y novedades del Universo Quemado.
+      Cada publicación es una puerta entreabierta al proceso creativo de Cristian Piscitelli.
+    </p>
+
     {{ if not .Pages }}
     <p style="color:var(--gris);font-style:italic;">Próximamente — el universo sigue ardiendo.</p>
     {{ else }}
@@ -55,6 +60,14 @@
 </div>
 
 <style>
+.novedades-intro {
+  font-size: 1.05rem;
+  color: var(--crema-suave);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
 .novedades-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
