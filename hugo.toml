@@ -6,11 +6,13 @@ enableRobotsTXT = true
 
 [params]
   description = "Cristian Piscitelli, escritor argentino de thriller psicológico rural. Autor de El Boliche Quemado y Contexto Quemado. Universo Quemado: narrativa de atmósfera, silencio y fuego."
-  keywords = "Cristian Piscitelli, Universo Quemado, El Boliche Quemado, Contexto Quemado, thriller psicológico rural, realismo gótico bonaerense, escritor argentino, audiolibro español, audiocuento, literatura argentina, novela bonaerense, cuentos cortos argentina, pampa bonaerense, narrativa argentina, libros Kindle, Sebastián Cabello"
+  keywords = "Cristian Piscitelli, Universo Quemado, El Boliche Quemado, Contexto Quemado, thriller psicológico rural, realismo gótico bonaerense, escritor argentino, escritor Pehuajó, audiolibro español, audiocuento, literatura argentina, novela bonaerense, cuentos cortos argentina, pampa bonaerense, narrativa argentina independiente, comprar ebook argentina, thriller rural argentina"
   author = "Cristian Piscitelli"
   tagline = "Lo que arde no siempre se ve. Pero siempre deja olor a humo."
   email = "cristian@cpescritor.com"
-  tienda = "https://cpiscitelli.empretienda.com.ar/"
+  tienda = "/tienda/"
+  hotmart_ebq = "https://pay.hotmart.com/V106393966A?checkoutMode=2"
+  hotmart_cq  = "https://pay.hotmart.com/B106394206B?checkoutMode=2"
   amazon = "https://www.amazon.com/author/crispe"
   instagram = "https://www.instagram.com/cpiscitelliescritor"
   facebook = "https://www.facebook.com/crispescritor"
@@ -34,29 +36,34 @@ enableRobotsTXT = true
 [[menus.main]]
   name = "Novedades"
   url = "/novedades/"
-  weight = 0
-
-[[menus.main]]
-  name = "Audio"
-  url = "/audiolibro/"
-  weight = 1
+  weight = 10
 
 [[menus.main]]
   name = "Videos"
   url = "/videos/"
-  weight = 2
+  weight = 20
 
 [[menus.main]]
   name = "Sobre el autor"
   url = "/sobre/"
-  weight = 3
+  weight = 30
+
+[[menus.main]]
+  name = "Audio"
+  url = "/audiolibro/"
+  weight = 40
 
 [[menus.main]]
   name = "Contacto"
   url = "/contacto/"
-  weight = 4
+  weight = 50
 
 [[menus.main]]
   name = "Prensa"
   url = "/prensa/"
-  weight = 5
+  weight = 60
+
+[[menus.main]]
+  name = "Tienda"
+  url = "/tienda/"
+  weight = 70

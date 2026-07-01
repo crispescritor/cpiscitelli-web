@@ -95,36 +95,87 @@
 
     <div class="medios-lista">
       {{- range $medios }}
-      {{- $tipoIcono := dict "prensa" "📰" "radio" "🎙️" "podcast" "🎧" "tv" "📺" "digital" "💻" "redes" "📱" "resena" "⭐" }}
-      {{- $icono := index $tipoIcono (.Params.tipo | lower) | default "📎" }}
+      {{- /* SVG iconos por tipo — evita inconsistencias de emoji entre browsers */}}
+      {{- $tipoIcono := dict
+        "prensa"  "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><path d='M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2'/><path d='M18 14h-8M15 18h-5M10 6h8v4h-8z'/></svg>"
+        "radio"   "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><circle cx='12' cy='12' r='2'/><path d='M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14'/></svg>"
+        "podcast" "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><path d='M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z'/><path d='M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8'/></svg>"
+        "tv"      "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><rect x='2' y='7' width='20' height='15' rx='2'/><polyline points='17 2 12 7 7 2'/></svg>"
+        "digital" "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><circle cx='12' cy='12' r='10'/><path d='M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/></svg>"
+        "redes"   "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><rect x='5' y='2' width='14' height='20' rx='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg>"
+        "resena"  "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/></svg>"
+      }}
+      {{- $icono := index $tipoIcono (.Params.tipo | lower) | default "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8'><path d='M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48'/></svg>" }}
       {{- $tieneMedia := or .Params.imagen .Params.video_url .Params.audio_url .Params.youtube_id }}
 
-      {{- if $tieneMedia }}
-      {{/* Card completa para ítems con archivo */}}
-      <a href="{{ .Permalink }}" class="medio-card" target="_blank" rel="noopener" data-aos="fade-up">
+      {{- if .Params.social_id }}
+      {{/* Card de red social — misma proporción que el resto, sin embed pesado */}}
+      {{- $platColor := dict "instagram" "linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" "tiktok" "#010101" "facebook" "#1877f2" }}
+      {{- $platIcono := dict "instagram" "📷" "tiktok" "♪" "facebook" "f" }}
+      {{- $color := index $platColor (.Params.plataforma | lower) | default "var(--brasa)" }}
+      {{- $icono := index $platIcono (.Params.plataforma | lower) | default "▶" }}
+      <div class="medio-card" data-aos="fade-up">
         <div class="medio-card__thumb">
-          {{- if .Params.thumbnail }}
+          <a href="{{ .Params.url_externa }}" target="_blank" rel="noopener" style="display:block;height:100%;position:relative;">
+            {{- if .Params.thumbnail }}
+            <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy">
+            {{- else }}
+            <div class="medio-card__thumb-icon" style="background:var(--negro);">{{ $icono }}</div>
+            {{- end }}
+            <div class="medio-social-play" style="background:{{ $color }};">{{ $icono }}</div>
+          </a>
+          <span class="medio-tipo-badge" style="background:{{ $color }};border:none;">{{ .Params.plataforma | upper }}</span>
+        </div>
+        <div class="medio-card__body">
+          <p class="medio-cita">{{ .Params.medio }}{{ with .Params.medio }} · {{ end }}{{ .Date.Format "02 de January de 2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</p>
+          <h3 class="medio-card__titulo">{{ .Title }}</h3>
+          {{- with .Description }}<p class="medio-extracto">{{ . | truncate 120 "…" }}</p>{{- end }}
+          <div class="medio-card__acciones">
+            <a href="{{ .Params.url_externa }}" target="_blank" rel="noopener"
+               class="medio-accion-btn" style="background:{{ $color }};color:#fff;">
+              Ver en {{ .Params.plataforma | title }} ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {{- else if $tieneMedia }}
+      {{/* Card completa para ítems con archivo o YouTube */}}
+      <div class="medio-card" data-aos="fade-up">
+        <div class="medio-card__thumb">
+          {{- if .Params.youtube_id }}
+          <a href="https://www.youtube.com/watch?v={{ .Params.youtube_id }}" target="_blank" rel="noopener" style="display:block;height:100%;">
+            <img src="https://img.youtube.com/vi/{{ .Params.youtube_id }}/mqdefault.jpg" alt="{{ .Title }}" loading="lazy">
+            <div class="medio-yt-play">▶</div>
+          </a>
+          {{- else if .Params.thumbnail }}
           <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy">
-          {{- else if .Params.youtube_id }}
-          <img src="https://img.youtube.com/vi/{{ .Params.youtube_id }}/mqdefault.jpg" alt="{{ .Title }}" loading="lazy">
           {{- else if .Params.imagen }}
           <img src="{{ .Params.imagen }}" alt="{{ .Title }}" loading="lazy">
           {{- else }}
-          <div class="medio-card__thumb-icon">{{ $icono }}</div>
+          <div class="medio-card__thumb-icon">{{ $icono | safeHTML }}</div>
           {{- end }}
           <span class="medio-tipo-badge">{{ .Params.tipo | upper }}</span>
         </div>
         <div class="medio-card__body">
-          <p class="medio-cita">{{ .Params.medio }}{{ with .Params.medio }} · {{ end }}{{ .Date.Format "02 de January de 2006" }}</p>
+          <p class="medio-cita">{{ .Params.medio }}{{ with .Params.medio }} · {{ end }}{{ .Date.Format "02 de January de 2006" }}{{ with .Params.author }} · Por {{ . }}{{ end }}</p>
           <h3 class="medio-card__titulo">{{ .Title }}</h3>
           {{- with .Description }}<p class="medio-extracto">{{ . | truncate 120 "…" }}</p>{{- end }}
+          <div class="medio-card__acciones">
+            {{- if .Params.youtube_id }}
+            <a href="https://www.youtube.com/watch?v={{ .Params.youtube_id }}" target="_blank" rel="noopener" class="medio-accion-btn medio-accion-yt">▶ Ver video</a>
+            {{- end }}
+            {{- if .Params.url_externa }}
+            <a href="{{ .Params.url_externa }}" target="_blank" rel="noopener" class="medio-accion-btn medio-accion-link">Ver nota ↗</a>
+            {{- end }}
+          </div>
         </div>
-      </a>
+      </div>
 
       {{- else }}
       {{/* Ítem compacto para links externos */}}
       <div class="medio-link-item" data-aos="fade-up">
-        <span class="medio-link-icono">{{ $icono }}</span>
+        <span class="medio-link-icono">{{ $icono | safeHTML }}</span>
         <div class="medio-link-contenido">
           <div class="medio-link-header">
             <span class="medio-link-cita">{{ .Params.medio }}{{ with .Params.medio }} · {{ end }}{{ .Date.Format "02 de January de 2006" }}</span>
@@ -188,7 +239,8 @@
   transition: border-color .2s;
 }
 .medio-link-item:hover { border-color: rgba(193,92,30,.5); }
-.medio-link-icono { font-size: 1.4rem; flex-shrink:0; margin-top:.1rem; }
+.medio-link-icono { width:28px; height:28px; flex-shrink:0; margin-top:.1rem; color:var(--brasa); }
+.medio-link-icono svg { width:100%; height:100%; }
 .medio-link-contenido { flex: 1; min-width:0; }
 .medio-link-header { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.3rem; }
 .medio-link-cita { font-size:.72rem; color:var(--gris); font-weight:500; letter-spacing:.04em; }
@@ -197,6 +249,34 @@
 a.medio-link-titulo:hover { color:var(--brasa-claro); }
 .medio-extracto-sm { font-size:.82rem; color:var(--gris); line-height:1.55; margin-top:.4rem; }
 .medio-link-thumb { width:100%; max-height:180px; object-fit:cover; border-radius:4px; margin-top:.75rem; }
+
+/* Social card play button */
+.medio-social-play {
+  position:absolute; bottom:.6rem; right:.6rem;
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.9rem; color:#fff; font-weight:700;
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+/* Play overlay en YouTube */
+.medio-yt-play {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:2.2rem; color:rgba(255,255,255,.9);
+  text-shadow: 0 2px 12px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+.medio-card__thumb a:hover .medio-yt-play { color:#fff; }
+
+/* Botones de acción en la card */
+.medio-card__acciones { display:flex; gap:.5rem; margin-top:.75rem; flex-wrap:wrap; }
+.medio-accion-btn {
+  font-size:.75rem; font-weight:500; padding:.3rem .75rem;
+  border-radius:4px; text-decoration:none; transition:opacity .2s;
+}
+.medio-accion-btn:hover { opacity:.8; }
+.medio-accion-yt   { background:#ff0000; color:#fff; }
+.medio-accion-link { background:var(--grafito); color:var(--crema); border:1px solid rgba(255,255,255,.15); }
 
 /* Compartidos */
 .medio-cita { font-size:.72rem; color:var(--brasa); font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.4rem; }

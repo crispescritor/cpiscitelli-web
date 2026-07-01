@@ -20,7 +20,7 @@
           <span class="novedad-tipo">{{ .Params.tipo | default "Texto" }}</span>
           <time class="novedad-fecha">{{ .Date.Format "02.01.2006" }}</time>
         </div>
-        {{- /* Thumbnail: thumbnail extraído > imagen > youtube > video placeholder */}}
+        {{- /* Thumbnail: thumbnail extraído > imagen > youtube > primera de galería > video placeholder */}}
         {{ if .Params.thumbnail }}
         <div class="novedad-card__thumb">
           <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy">
@@ -34,6 +34,11 @@
         <div class="novedad-card__thumb">
           <img src="https://img.youtube.com/vi/{{ .Params.youtube_id }}/mqdefault.jpg" alt="{{ .Title }}" loading="lazy">
           <span class="novedad-play-icon">▶</span>
+        </div>
+        {{ else if .Params.galeria }}
+        <div class="novedad-card__imagen">
+          <img src="{{ index .Params.galeria 0 }}" alt="{{ .Title }}" loading="lazy">
+          {{ if gt (len .Params.galeria) 1 }}<span class="novedad-galeria-count">📷 {{ len .Params.galeria }}</span>{{ end }}
         </div>
         {{ else if .Params.video_url }}
         <div class="novedad-card__thumb novedad-card__thumb--placeholder">
@@ -110,10 +115,24 @@
   object-fit: cover;
   max-height: 200px;
 }
-.novedad-card__thumb {
+.novedad-card__thumb,
+.novedad-card__imagen {
   position: relative;
   display: inline-block;
   width: 100%;
+}
+.novedad-galeria-count {
+  position: absolute;
+  bottom: 1.3rem;
+  right: .6rem;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: #fff;
+  background: rgba(0,0,0,.65);
+  padding: .2rem .5rem;
+  border-radius: 3px;
+  pointer-events: none;
 }
 .novedad-play-icon {
   position: absolute;

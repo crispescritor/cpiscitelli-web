@@ -21,9 +21,32 @@
           {{ range .Params.formatos }}<span class="formato-tag">{{ . }}</span>{{ end }}
         </div>
         <div class="botones-grupo">
-          <a href="{{ $.Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar en tienda</a>
+          {{ if .Params.hotmart_url }}
+          <button type="button" class="btn btn-primario"
+                  onclick="document.getElementById('hm-libro').click()">
+            Comprar eBook
+          </button>
+          <a id="hm-libro"
+             href="{{ .Params.hotmart_url }}"
+             class="hotmart-fb hotmart__button-checkout"
+             style="display:none;position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">.</a>
+          {{ end }}
+          <a href="{{ $.Site.Params.tienda }}" class="btn btn-secundario">Ver tienda completa</a>
           <a href="{{ $.Site.Params.amazon }}" class="btn btn-secundario" target="_blank" rel="noopener">Amazon Kindle</a>
         </div>
+        {{ if .Params.hotmart_url }}
+        <script type="text/javascript">
+        (function(){
+          var s=document.createElement('script');
+          s.src='https://static.hotmart.com/checkout/widget.min.js';
+          document.head.appendChild(s);
+          var l=document.createElement('link');
+          l.rel='stylesheet';l.type='text/css';
+          l.href='https://static.hotmart.com/css/hotmart-fb.min.css';
+          document.head.appendChild(l);
+        })();
+        </script>
+        {{ end }}
         {{ if .Params.audio_url }}
         <div style="margin-top:2rem;">
           <span class="etiqueta">{{ .Params.audio_label }}</span>

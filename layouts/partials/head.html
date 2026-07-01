@@ -14,13 +14,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta name="keywords" content="{{ .Site.Params.keywords }}">
 <meta name="author" content="{{ .Site.Params.author }}">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="theme-color" content="#0d0c0b">
+<meta name="geo.region" content="AR-B">
+<meta name="geo.placename" content="Pehuajó, Buenos Aires, Argentina">
 <link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Preconnect CDN -->
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://connect.facebook.net">
+<link rel="dns-prefetch" href="https://static.hotmart.com">
 
 <!-- Hreflang -->
 <link rel="alternate" hreflang="es" href="{{ .Permalink }}">
 <link rel="alternate" hreflang="es-AR" href="{{ .Permalink }}">
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
 
 {{- /* ── OG IMAGE: usa tapa del libro si existe, foto del autor en /sobre/, og-image en el resto ── */}}
 {{- $ogImage := printf "%s/img/og-image.png" .Site.Params.canonicalURL }}
@@ -40,9 +50,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   {{- else if .Params.youtube_id }}
     {{- $ogImage = printf "https://img.youtube.com/vi/%s/maxresdefault.jpg" .Params.youtube_id }}
   {{- end }}
-{{- else if not .IsHome }}
-  {{- $ogType = "article" }}
 {{- end }}
+{{- $ogImageType := "image/png" }}
+{{- if hasSuffix $ogImage ".webp" }}{{- $ogImageType = "image/webp" }}{{- end }}
+{{- if or (hasSuffix $ogImage ".jpg") (hasSuffix $ogImage ".jpeg") }}{{- $ogImageType = "image/jpeg" }}{{- end }}
 
 <!-- Open Graph -->
 <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — Cristian Piscitelli{{ end }}">
@@ -53,7 +64,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image:secure_url" content="{{ $ogImage }}">
 <meta property="og:image:width" content="{{ if .Params.tapa }}{{ with .Params.img_width }}{{ . }}{{ else }}1200{{ end }}{{ else }}1200{{ end }}">
 <meta property="og:image:height" content="{{ if .Params.tapa }}{{ with .Params.img_height }}{{ . }}{{ else }}630{{ end }}{{ else }}630{{ end }}">
-<meta property="og:image:type" content="{{ if .Params.tapa }}image/png{{ else }}image/png{{ end }}">
+<meta property="og:image:type" content="{{ $ogImageType }}">
 <meta property="og:image:alt" content="{{ if .IsHome }}Cristian Piscitelli — Universo Quemado{{ else }}{{ .Title }}{{ end }}">
 <meta property="og:site_name" content="Cristian Piscitelli — Universo Quemado">
 <meta property="og:locale" content="es_AR">
@@ -81,7 +92,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <!-- CSS -->
 {{ $css := resources.Get "css/main.css" }}
-<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+<link rel="stylesheet" href="{{ $css.RelPermalink }}?v={{ now.Unix }}">
 
 <!-- AOS -->
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
@@ -98,6 +109,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   "description": "Escritor argentino de thriller psicológico rural. Creador del Universo Quemado.",
   "nationality": { "@type": "Country", "name": "Argentina" },
   "birthPlace": { "@type": "Place", "name": "Chacabuco, Buenos Aires, Argentina" },
+  "homeLocation": { "@type": "Place", "name": "Pehuajó, Buenos Aires, Argentina" },
   "sameAs": [
     "{{ .Site.Params.instagram }}",
     "{{ .Site.Params.amazon }}",
@@ -199,6 +211,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {{- end }}
 {{- end }}
 
+{{- if not .IsHome }}
+<!-- JSON-LD: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "{{ .Site.BaseURL }}" },
+    { "@type": "ListItem", "position": 2, "name": "{{ .Title }}", "item": "{{ .Permalink }}" }
+  ]
+}
+</script>
+{{- end }}
+
 <!-- Plausible Analytics (reemplazar dominio cuando esté disponible) -->
 <!-- <script defer data-domain="cpiscitelli.com" src="https://plausible.io/js/script.js"></script> -->
 
@@ -212,10 +238,10 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '485603544542563');
+fbq('init', '27356165054013046');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=485603544542563&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=27356165054013046&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->

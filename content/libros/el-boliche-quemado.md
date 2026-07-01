@@ -8,6 +8,7 @@ formatos: ["Digital", "Audiolibro", "Físico"]
 tapa: "/img/tapa-ebq.webp"
 img_width: 400
 img_height: 605
+hotmart_url: "https://pay.hotmart.com/V106393966A?checkoutMode=2"
 audio_url: ""
 audio_label: "Escuchá el primer capítulo"
 sitemap:

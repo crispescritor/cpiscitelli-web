@@ -1,0 +1,220 @@
+{{ define "main" }}
+
+{{/* Script Hotmart checkout — se carga una sola vez */}}
+<script type="text/javascript">
+(function(){
+  var s = document.createElement('script');
+  s.src = 'https://static.hotmart.com/checkout/widget.min.js';
+  document.head.appendChild(s);
+  var l = document.createElement('link');
+  l.rel = 'stylesheet'; l.type = 'text/css';
+  l.href = 'https://static.hotmart.com/css/hotmart-fb.min.css';
+  document.head.appendChild(l);
+})();
+</script>
+
+<!-- ── HERO ── -->
+<section class="tienda-hero section--oscura">
+  <div class="container tienda-hero__inner">
+    <span class="etiqueta">Universo Quemado · Tienda oficial</span>
+    <h1>eBooks de Cristian Piscitelli</h1>
+    <div class="divisor" style="margin:1rem auto 1.5rem;"></div>
+    <p class="tienda-hero__bajada">Versiones en <strong>eBook PDF</strong> de toda la obra disponible. Descarga inmediata, pago seguro, compatible con cualquier dispositivo.</p>
+    <div class="tienda-hero__sellos">
+      <span class="tienda-sello">✓ Descarga instantánea</span>
+      <span class="tienda-sello">✓ Pago 100 % seguro</span>
+      <span class="tienda-sello">✓ 7 días de garantía</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCTOS ── -->
+<section class="section">
+  <div class="container">
+    <div class="tienda-grilla">
+
+      <!-- EL BOLICHE QUEMADO -->
+      <article class="tienda-card" id="el-boliche-quemado" data-aos="fade-up">
+        <div class="tienda-card__imagen">
+          <img src="/img/tapa-ebq.webp"
+               alt="El Boliche Quemado — novela de Cristian Piscitelli"
+               width="260" height="390" loading="eager">
+        </div>
+        <div class="tienda-card__cuerpo">
+          <span class="tienda-card__tipo">Novela · Thriller psicológico rural</span>
+          <h2 class="tienda-card__titulo">El Boliche Quemado</h2>
+          <p class="tienda-card__sinopsis">Un boliche incendiado, una historia que nadie quiere contar y un pueblo que parece saber más de lo que admite. Nueva Plata, llanura bonaerense, años sesenta. Una novela sobre la memoria, la culpa y el fuego que no se apaga.</p>
+          <ul class="tienda-card__specs">
+            <li><span>Formato</span> eBook · PDF</li>
+            <li><span>ISBN</span> 978-631-00-6801-5</li>
+            <li><span>Idioma</span> Español</li>
+            <li><span>Entrega</span> Inmediata por email</li>
+          </ul>
+          <div class="tienda-card__precio-wrap">
+            <div class="tienda-card__precio">USD 4,99</div>
+            <div class="tienda-badge-formato">eBook · PDF</div>
+          </div>
+          <button type="button" class="btn btn-primario tienda-card__btn"
+                  onclick="document.getElementById('hm-ebq').click()">
+            Comprar eBook
+          </button>
+          <a id="hm-ebq"
+             href="https://pay.hotmart.com/V106393966A?checkoutMode=2"
+             class="hotmart-fb hotmart__button-checkout"
+             style="display:none;position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">.</a>
+          <a href="/libros/el-boliche-quemado/" class="tienda-card__detalle">
+            Leer sinopsis completa →
+          </a>
+        </div>
+      </article>
+
+      <!-- CONTEXTO QUEMADO -->
+      <article class="tienda-card" id="contexto-quemado" data-aos="fade-up" data-aos-delay="120">
+        <div class="tienda-card__imagen">
+          <img src="/img/tapa-cq.png"
+               alt="Contexto Quemado — cuentos de Cristian Piscitelli"
+               width="260" height="390" loading="eager">
+        </div>
+        <div class="tienda-card__cuerpo">
+          <span class="tienda-card__tipo">Cuentos · Ficción literaria de atmósfera</span>
+          <h2 class="tienda-card__titulo">Contexto Quemado</h2>
+          <p class="tienda-card__sinopsis">Diez cuentos cortos que incineran. Diez puertas entreabiertas al Universo Quemado: heridas que no cierran, cuerpos que hablan, casas que guardan más de lo que muestran.</p>
+          <ul class="tienda-card__specs">
+            <li><span>Formato</span> eBook · PDF</li>
+            <li><span>ISBN</span> 978-631-00-8019-2</li>
+            <li><span>Idioma</span> Español</li>
+            <li><span>Entrega</span> Inmediata por email</li>
+          </ul>
+          <div class="tienda-card__precio-wrap">
+            <div class="tienda-card__precio">USD 4,99</div>
+            <div class="tienda-badge-formato">eBook · PDF</div>
+          </div>
+          <button type="button" class="btn btn-primario tienda-card__btn"
+                  onclick="document.getElementById('hm-cq').click()">
+            Comprar eBook
+          </button>
+          <a id="hm-cq"
+             href="https://pay.hotmart.com/B106394206B?checkoutMode=2"
+             class="hotmart-fb hotmart__button-checkout"
+             style="display:none;position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">.</a>
+          <a href="/libros/contexto-quemado/" class="tienda-card__detalle">
+            Leer sinopsis completa →
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CÓMO FUNCIONA ── -->
+<section class="section section--oscura">
+  <div class="container">
+    <span class="etiqueta">Proceso de compra</span>
+    <h2>¿Cómo funciona?</h2>
+    <div class="divisor"></div>
+    <div class="tienda-pasos">
+      <div class="tienda-paso" data-aos="fade-up">
+        <div class="tienda-paso__num">01</div>
+        <h3>Elegís tu libro</h3>
+        <p>Hacé clic en "Comprar eBook". Se abre el checkout seguro de Hotmart sin salir del sitio.</p>
+      </div>
+      <div class="tienda-paso" data-aos="fade-up" data-aos-delay="100">
+        <div class="tienda-paso__num">02</div>
+        <h3>Pagás con seguridad</h3>
+        <p>Tarjeta de crédito, débito o PayPal. Hotmart encripta cada transacción. Acepta todas las monedas principales y convierte automáticamente.</p>
+      </div>
+      <div class="tienda-paso" data-aos="fade-up" data-aos-delay="200">
+        <div class="tienda-paso__num">03</div>
+        <h3>Descargás al instante</h3>
+        <p>Recibís el PDF en tu email de inmediato. Leé en celular, tablet, computadora, Kindle o cualquier lector digital.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GARANTÍA + SOPORTE ── -->
+<section class="section section--media">
+  <div class="container tienda-garantia-wrap">
+    <div data-aos="fade-right">
+      <span class="etiqueta">Sin riesgo</span>
+      <h2>Garantía de 7 días</h2>
+      <div class="divisor"></div>
+      <p>Si el libro no cumplió tus expectativas, Hotmart te devuelve el dinero dentro de los 7 días posteriores a la compra. Sin preguntas, sin trámites.</p>
+      <p class="tienda-nota">Hotmart es una plataforma de confianza usada por más de 35 millones de personas en el mundo.</p>
+    </div>
+    <div class="tienda-soporte" data-aos="fade-left">
+      <span class="etiqueta">¿Dudas?</span>
+      <h3>Contacto directo</h3>
+      <div class="divisor" style="margin-bottom:1.2rem;"></div>
+      <p>Si tenés algún inconveniente con tu compra o descarga, escribí a <a href="mailto:cristian@cpescritor.com">cristian@cpescritor.com</a> y te respondo a la brevedad.</p>
+      <p class="tienda-nota">También podés seguir el Universo Quemado en Instagram y Facebook para novedades y lanzamientos.</p>
+      <a href="/contacto/" class="btn btn-secundario" style="margin-top:1rem;display:inline-block;">Ir al contacto</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEO: Schema Offer ── -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "El Boliche Quemado",
+    "author": { "@type": "Person", "name": "Cristian Piscitelli" },
+    "isbn": "978-631-00-6801-5",
+    "inLanguage": "es",
+    "bookFormat": "EBook",
+    "genre": ["Thriller Psicológico", "Realismo Gótico", "Literatura Argentina"],
+    "description": "Un boliche incendiado, una historia que nadie quiere contar y un pueblo que parece saber más de lo que admite.",
+    "offers": {
+      "@type": "Offer",
+      "price": "4.99",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://pay.hotmart.com/V106393966A?checkoutMode=2"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "Contexto Quemado",
+    "author": { "@type": "Person", "name": "Cristian Piscitelli" },
+    "isbn": "978-631-00-8019-2",
+    "inLanguage": "es",
+    "bookFormat": "EBook",
+    "genre": ["Cuentos", "Thriller Psicológico", "Literatura Argentina"],
+    "description": "Diez cuentos cortos que incineran. Diez puertas entreabiertas al Universo Quemado.",
+    "offers": {
+      "@type": "Offer",
+      "price": "4.99",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://pay.hotmart.com/B106394206B?checkoutMode=2"
+    }
+  }
+]
+</script>
+
+<!-- SEO: WebPage schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Tienda de eBooks — Cristian Piscitelli",
+  "description": "Comprá los eBooks de Cristian Piscitelli en formato digital PDF. El Boliche Quemado y Contexto Quemado. Descarga inmediata, pago seguro.",
+  "url": "https://cpescritor.com/tienda/",
+  "inLanguage": "es-AR",
+  "author": { "@type": "Person", "name": "Cristian Piscitelli" },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://cpescritor.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Tienda", "item": "https://cpescritor.com/tienda/" }
+    ]
+  }
+}
+</script>
+
+{{ partial "cta-novedades.html" . }}
+{{ end }}

@@ -29,7 +29,11 @@
       <div class="novedad-layout__media" data-aos="fade-right">
 
         {{- if .Params.youtube_id }}
-        <div class="novedad-video-wrap">
+        {{- $ori := .Params.youtube_orientation | default "" }}
+        {{- $cls := "" }}
+        {{- if eq $ori "vertical" }}{{ $cls = " novedad-video-wrap--vertical" }}{{ end }}
+        {{- if eq $ori "square" }}{{ $cls = " novedad-video-wrap--square" }}{{ end }}
+        <div class="novedad-video-wrap{{ $cls }}">
           {{- /* poster = thumbnail si existe */}}
           {{- if .Params.thumbnail }}<img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" style="display:none;">{{- end }}
           <iframe
@@ -42,7 +46,11 @@
         </div>
 
         {{- else if .Params.video_url }}
-        <div class="novedad-video-wrap">
+        {{- $ori := .Params.video_orientation | default "" }}
+        {{- $cls := "" }}
+        {{- if eq $ori "vertical" }}{{ $cls = " novedad-video-wrap--vertical" }}{{ end }}
+        {{- if eq $ori "square" }}{{ $cls = " novedad-video-wrap--square" }}{{ end }}
+        <div class="novedad-video-wrap{{ $cls }}">
           <video controls{{ with .Params.thumbnail }} poster="{{ . }}"{{ end }}>
             <source src="{{ .Params.video_url }}" type="video/mp4">
           </video>
@@ -60,6 +68,16 @@
           <audio controls>
             <source src="{{ .Params.audio_url }}" type="audio/mpeg">
           </audio>
+        </div>
+
+        {{- /* Si solo hay galería y nada más: stack vertical por defecto; JS lo cambia a carrusel si hay 5+ fotos o si sobrepasa el alto del texto */}}
+        {{- else if .Params.galeria }}
+        <div class="novedad-galeria-stack" data-count="{{ len .Params.galeria }}">
+          {{- range $i, $img := .Params.galeria }}
+          <div class="novedad-galeria-stack__item" data-i="{{ $i }}">
+            <img src="{{ $img }}" alt="Foto {{ add $i 1 }}" loading="{{ if lt $i 2 }}eager{{ else }}lazy{{ end }}">
+          </div>
+          {{- end }}
         </div>
         {{- end }}
 
@@ -86,8 +104,54 @@
 
     </div><!-- /novedad-layout -->
 
-    <!-- Galería de fotos -->
-    {{- if .Params.galeria }}
+    <!-- Adaptive sizing para video y single image — SIEMPRE se renderiza (no depende de galería) -->
+    <script>
+    (function() {
+      const cuerpo = document.querySelector('.novedad-layout__cuerpo');
+      if (!cuerpo) return;
+      const wrap = document.querySelector('.novedad-video-wrap, .novedad-imagen');
+      if (!wrap) return;
+      function getAspectRatio(el) {
+        if (el.classList.contains('novedad-video-wrap--vertical')) return 9 / 16;
+        if (el.classList.contains('novedad-video-wrap--square'))   return 1 / 1;
+        if (el.classList.contains('novedad-video-wrap')) return 16 / 9;
+        const img = el.querySelector('img');
+        if (img && img.naturalWidth && img.naturalHeight) {
+          return img.naturalWidth / img.naturalHeight;
+        }
+        return null;
+      }
+      function adaptMedia() {
+        wrap.style.height = ''; wrap.style.maxHeight = ''; wrap.style.maxWidth = ''; wrap.style.paddingBottom = '';
+        const textH  = cuerpo.scrollHeight;
+        if (!textH) return;
+        const mediaH = wrap.offsetHeight;
+        if (mediaH <= textH * 1.05) return;
+        const ratio = getAspectRatio(wrap);
+        if (!ratio) return;
+        wrap.style.height = textH + 'px';
+        wrap.style.paddingBottom = '0';
+        wrap.style.maxWidth = Math.round(textH * ratio) + 'px';
+      }
+      function whenReady() { requestAnimationFrame(() => requestAnimationFrame(adaptMedia)); }
+      const video   = wrap.querySelector('video');
+      const iframe  = wrap.querySelector('iframe');
+      const img     = wrap.querySelector('img');
+      if (video) video.addEventListener('loadedmetadata', whenReady, { once: true });
+      if (iframe) iframe.addEventListener('load', whenReady, { once: true });
+      if (img) {
+        if (img.complete && img.naturalWidth) whenReady();
+        else img.addEventListener('load', whenReady, { once: true });
+      }
+      if (document.readyState === 'complete') whenReady();
+      else window.addEventListener('load', whenReady, { once: true });
+      setTimeout(adaptMedia, 3000);
+      window.addEventListener('resize', whenReady);
+    })();
+    </script>
+
+    <!-- Galería de fotos (solo si hay otro media en el slot principal; si no, ya se renderizó como carrusel arriba) -->
+    {{- if and .Params.galeria (or .Params.youtube_id .Params.video_url .Params.imagen .Params.audio_url) }}
     <div class="novedad-galeria" data-aos="fade-up">
       <div class="novedad-galeria__header">
         <span class="etiqueta">Galería</span>
@@ -143,6 +207,148 @@
       if (e.key === 'ArrowLeft')  moverLightbox(-1);
       if (e.key === 'Escape')     cerrarLightbox();
     });
+
+    /* ── Galería del slot de media: stack vertical con tamaño adaptado al texto ── */
+    (function() {
+      const stack = document.querySelector('.novedad-galeria-stack');
+      if (!stack) return;
+      const items = Array.from(stack.querySelectorAll('.novedad-galeria-stack__item'));
+      if (!items.length) return;
+      const cuerpo = document.querySelector('.novedad-layout__cuerpo');
+      const GAP_PX = 16;
+      const MIN_IMG_H = 160;  // No bajar de esto para que no se vean ridículas
+
+      // Click en cualquier imagen abre lightbox
+      items.forEach((item, i) => {
+        item.addEventListener('click', () => abrirLightbox(i));
+      });
+
+      // Calcular la altura INTRÍNSECA que tendrían las imágenes apiladas
+      function intrinsicStackHeight() {
+        const cw = stack.offsetWidth;
+        if (!cw) return 0;
+        let total = 0, counted = 0;
+        items.forEach(item => {
+          const img = item.querySelector('img');
+          if (img && img.naturalWidth && img.naturalHeight) {
+            total += (cw * img.naturalHeight) / img.naturalWidth;
+            counted++;
+          }
+        });
+        if (counted < items.length) return 0;
+        return total + (items.length - 1) * GAP_PX;
+      }
+
+      // Si la galería se desborda, achicar cada imagen para que TODA la pila
+      // ocupe la misma altura que la columna de texto. Si quedan demasiado chicas,
+      // entonces sí pasamos a carrusel.
+      function adapt() {
+        if (!cuerpo) return;
+        const textH = cuerpo.scrollHeight;
+        const count = items.length;
+        if (count < 1 || !textH) return;
+
+        const stackH = Math.max(stack.scrollHeight, intrinsicStackHeight());
+        if (!stackH) return;
+
+        // Si el stack natural entra cómodo (tolerancia 8%), no tocamos nada
+        if (stackH <= textH * 1.08) return;
+
+        // Calcular altura por imagen para que la pila iguale la del texto
+        const totalGaps = (count - 1) * GAP_PX;
+        const perImg   = Math.floor((textH - totalGaps) / count);
+
+        if (perImg >= MIN_IMG_H) {
+          // Aplicar tamaño limitado a cada imagen con object-fit: cover
+          items.forEach(item => {
+            const img = item.querySelector('img');
+            if (img) {
+              img.style.height = perImg + 'px';
+              img.style.objectFit = 'cover';
+            }
+          });
+        } else {
+          // Demasiadas imágenes / texto muy corto → fallback a carrusel autoplay
+          enableCarousel(textH);
+        }
+      }
+
+      function enableCarousel(targetH) {
+        if (stack.classList.contains('is-carousel')) return;
+        stack.classList.add('is-carousel');
+        stack.style.height = targetH + 'px';
+        items[0].classList.add('active');
+
+        const prev = document.createElement('button');
+        prev.className = 'novedad-galeria-stack__arrow novedad-galeria-stack__arrow--prev';
+        prev.innerHTML = '‹'; prev.setAttribute('aria-label', 'Anterior');
+        stack.appendChild(prev);
+        const next = document.createElement('button');
+        next.className = 'novedad-galeria-stack__arrow novedad-galeria-stack__arrow--next';
+        next.innerHTML = '›'; next.setAttribute('aria-label', 'Siguiente');
+        stack.appendChild(next);
+        const dotsWrap = document.createElement('div');
+        dotsWrap.className = 'novedad-galeria-stack__dots';
+        items.forEach((_, i) => {
+          const d = document.createElement('span');
+          d.className = 'novedad-galeria-stack__dot' + (i === 0 ? ' active' : '');
+          dotsWrap.appendChild(d);
+        });
+        stack.appendChild(dotsWrap);
+        const counter = document.createElement('div');
+        counter.className = 'novedad-galeria-stack__counter';
+        counter.innerHTML = '<span class="cur">1</span>/<span class="tot">' + items.length + '</span>';
+        stack.appendChild(counter);
+        const dots = Array.from(dotsWrap.querySelectorAll('.novedad-galeria-stack__dot'));
+        const counterCur = counter.querySelector('.cur');
+        let idx = 0, timer = null; const DELAY = 4500;
+        function go(newIdx) {
+          items[idx].classList.remove('active'); dots[idx].classList.remove('active');
+          idx = (newIdx + items.length) % items.length;
+          items[idx].classList.add('active'); dots[idx].classList.add('active');
+          counterCur.textContent = idx + 1;
+        }
+        function tick()  { go(idx + 1); }
+        function start() { stop(); timer = setInterval(tick, DELAY); }
+        function stop()  { if (timer) { clearInterval(timer); timer = null; } }
+        prev.addEventListener('click', e => { e.stopPropagation(); go(idx - 1); start(); });
+        next.addEventListener('click', e => { e.stopPropagation(); go(idx + 1); start(); });
+        dots.forEach((d, i) => d.addEventListener('click', e => { e.stopPropagation(); go(i); start(); }));
+        stack.addEventListener('mouseenter', stop);
+        stack.addEventListener('mouseleave', start);
+        start();
+      }
+
+      function decideWhenReady() {
+        requestAnimationFrame(() => requestAnimationFrame(adapt));
+      }
+
+      // Esperar a que carguen las imágenes
+      const imgs = Array.from(stack.querySelectorAll('img'));
+      let loaded = 0;
+      function imgDone() { loaded++; if (loaded === imgs.length) decideWhenReady(); }
+      imgs.forEach(img => {
+        if (img.complete && img.naturalWidth) imgDone();
+        else {
+          img.addEventListener('load',  imgDone, { once: true });
+          img.addEventListener('error', imgDone, { once: true });
+        }
+      });
+      if (document.readyState === 'complete') decideWhenReady();
+      else window.addEventListener('load', decideWhenReady, { once: true });
+      setTimeout(adapt, 3000); // último recurso
+      // Reajustar al resize
+      window.addEventListener('resize', () => {
+        if (!stack.classList.contains('is-carousel')) {
+          // Reset estilos para recalcular limpio
+          items.forEach(item => {
+            const img = item.querySelector('img');
+            if (img) { img.style.height = ''; img.style.objectFit = ''; }
+          });
+          requestAnimationFrame(() => requestAnimationFrame(adapt));
+        }
+      });
+    })();
     </script>
 
     <style>
@@ -234,7 +440,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
           WhatsApp
         </a>
-        <button class="share-btn share-ig" onclick="copyInstagram('{{ .Permalink | absURL }}', '{{ .Title }}', '{{ delimit .Params.hashtags " " | safeJS }}')">
+        <button class="share-btn share-ig" onclick="copyInstagram('{{ .Permalink | absURL }}', '{{ .Title }}', '{{ with .Params.hashtags }}{{ delimit . " " | safeJS }}{{ end }}')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           <span class="ig-copy-txt">Instagram</span>
         </button>
@@ -359,6 +565,120 @@
 .novedad-video-wrap video {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%; border-radius: 8px;
+}
+/* Variante vertical: para Shorts / Reels (aspect 9:16), ancho limitado y centrado */
+.novedad-video-wrap--vertical {
+  padding-bottom: 177.77%;   /* 16/9 invertido = 9:16 */
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 768px) {
+  .novedad-video-wrap--vertical { max-width: 420px; }
+}
+/* Variante cuadrada: para videos 1:1 (Instagram clásico), ancho limitado */
+.novedad-video-wrap--square {
+  padding-bottom: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Galería en slot de media: stack vertical por defecto ── */
+.novedad-galeria-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.novedad-galeria-stack__item {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--negro);
+  position: relative;
+  transition: transform .3s;
+}
+.novedad-galeria-stack__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform .4s ease, filter .4s ease;
+}
+.novedad-galeria-stack__item:hover img {
+  transform: scale(1.03);
+  filter: brightness(.85);
+}
+
+/* ── Modo carrusel: lo activa el JS cuando count > 4 o no entra al lado del texto ── */
+.novedad-galeria-stack.is-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  gap: 0;
+  /* height la fija el JS para que coincida con el alto del texto */
+}
+.novedad-galeria-stack.is-carousel .novedad-galeria-stack__item {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transition: opacity .8s ease;
+  pointer-events: none;
+}
+.novedad-galeria-stack.is-carousel .novedad-galeria-stack__item.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.novedad-galeria-stack.is-carousel .novedad-galeria-stack__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Controles (los inserta el JS solo en modo carrusel) */
+.novedad-galeria-stack__arrow {
+  position: absolute; top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  border: none; border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  font-size: 1.6rem; line-height: 1; font-weight: 300;
+  cursor: pointer; z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity .25s, background .2s;
+}
+.novedad-galeria-stack.is-carousel:hover .novedad-galeria-stack__arrow { opacity: 1; }
+.novedad-galeria-stack__arrow:hover { background: var(--brasa); }
+.novedad-galeria-stack__arrow--prev { left: 10px; padding-right: 3px; }
+.novedad-galeria-stack__arrow--next { right: 10px; padding-left: 3px; }
+.novedad-galeria-stack__dots {
+  position: absolute; bottom: 12px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 2;
+}
+.novedad-galeria-stack__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,.4);
+  cursor: pointer;
+  transition: background .3s, transform .2s;
+}
+.novedad-galeria-stack__dot.active {
+  background: var(--brasa);
+  transform: scale(1.25);
+}
+.novedad-galeria-stack__counter {
+  position: absolute; top: 12px; right: 12px;
+  font-size: .68rem; font-weight: 600; letter-spacing: .08em;
+  color: #fff;
+  background: rgba(0,0,0,.55);
+  padding: .25rem .55rem; border-radius: 3px;
+  z-index: 2;
+}
+@media (max-width: 600px) {
+  .novedad-galeria-stack__arrow { display: none; }
 }
 .novedad-imagen img {
   width: 100%; border-radius: 8px; display: block; object-fit: cover;

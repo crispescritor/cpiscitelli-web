@@ -6,9 +6,10 @@ isbn: "978-631-00-8019-2"
 genero: "Cuento · Thriller psicológico · Costumbrismo oscuro"
 subtitulo: "Diez cuentos cortos que incineran"
 formatos: ["Digital", "Audiocuentos"]
-tapa: "/img/tapa-cq.webp"
-img_width: 400
-img_height: 400
+tapa: "/img/tapa-cq.png"
+img_width: 1024
+img_height: 1536
+hotmart_url: "https://pay.hotmart.com/B106394206B?checkoutMode=2"
 audio_url: ""
 audio_label: "Escuchá una muestra"
 sitemap:

@@ -6,6 +6,7 @@ tipo: "Fragmento"
 slug: "la-primera-manana-fria"
 draft: false
 video_url: "/novedades/la-primera-manana-fria/ebq---manada-de-perros-ebq.mp4"
+video_orientation: "vertical"
 thumbnail: "/novedades/la-primera-manana-fria/thumbnail.jpg"
 hashtags:
   - "#UniversoQuemado"

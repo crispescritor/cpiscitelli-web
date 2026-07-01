@@ -6,6 +6,7 @@ tipo: "Fragmento"
 slug: "volverte-a-ver-elisa"
 draft: false
 video_url: "/novedades/volverte-a-ver-elisa/fragmentos---fragmento-elisa.mp4"
+video_orientation: "square"
 thumbnail: "/novedades/volverte-a-ver-elisa/thumbnail.jpg"
 hashtags:
   - "#UniversoQuemado"

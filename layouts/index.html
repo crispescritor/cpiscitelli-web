@@ -19,7 +19,7 @@
     </p>
     <div class="botones-grupo" data-aos="fade-up" data-aos-delay="800">
       <a href="#obras" class="btn btn-primario">Ver los libros</a>
-      <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario" target="_blank" rel="noopener">Tienda online</a>
+      <a href="{{ .Site.Params.tienda }}" class="btn btn-secundario">Tienda online</a>
     </div>
   </div>
 </section>
@@ -31,24 +31,62 @@
   <div class="container">
     <div class="stats-grilla">
       <div data-aos="fade-up" data-aos-delay="0">
-        <span class="stat-numero" data-count="2">0</span>
-        <span class="stat-label">Libros publicados</span>
+        <span class="stat-numero" data-count="1">0</span>
+        <span class="stat-label">Novela</span>
       </div>
       <div data-aos="fade-up" data-aos-delay="100">
-        <span class="stat-numero" data-count="20">0</span>
-        <span class="stat-label">Capítulos de audiolibro</span>
-      </div>
-      <div data-aos="fade-up" data-aos-delay="200">
         <span class="stat-numero" data-count="10">0</span>
         <span class="stat-label">Cuentos</span>
       </div>
+      <div data-aos="fade-up" data-aos-delay="200">
+        <span class="stat-numero" data-count="2">0</span>
+        <span class="stat-label">Audiolibros completos</span>
+      </div>
       <div data-aos="fade-up" data-aos-delay="300">
-        <span class="stat-numero texto-brillo" data-count="1">0</span>
-        <span class="stat-label">Universo literario</span>
+        <span class="stat-numero texto-brillo" data-count="30">0</span>
+        <span class="stat-label">Capítulos de audio</span>
       </div>
     </div>
   </div>
 </div>
+
+<!-- ================================================================
+     UNIVERSO QUEMADO — concepto
+     ================================================================ -->
+<section class="uq-strip">
+  <div class="container">
+    <div class="uq-strip__inner">
+      <div class="uq-strip__texto" data-aos="fade-right">
+        <span class="etiqueta">Una constelación narrativa</span>
+        <h2 class="uq-strip__titulo">Universo Quemado</h2>
+        <div class="divisor"></div>
+        <p class="uq-strip__desc">Cuatro elementos. Una temperatura. No es una saga lineal, sino una constelación de obras donde el fuego funciona como imagen, símbolo y estructura de sentido. La llama que golpea, el humo que encubre, la ceniza que testimonia, la brasa que no termina de apagarse. Cada libro es una combustión distinta.</p>
+      </div>
+      <div class="uq-strip__pilares">
+        <div class="uq-pilar" data-aos="fade-up" data-aos-delay="100">
+          <span class="uq-pilar__nombre">La llama</span>
+          <span class="uq-pilar__def">el impacto</span>
+          <span class="uq-pilar__frase">La escena que no se puede dejar atrás.</span>
+        </div>
+        <div class="uq-pilar" data-aos="fade-up" data-aos-delay="200">
+          <span class="uq-pilar__nombre">El humo</span>
+          <span class="uq-pilar__def">el misterio</span>
+          <span class="uq-pilar__frase">Lo que se ve pero no se puede atrapar.</span>
+        </div>
+        <div class="uq-pilar" data-aos="fade-up" data-aos-delay="300">
+          <span class="uq-pilar__nombre">La ceniza</span>
+          <span class="uq-pilar__def">el recuerdo</span>
+          <span class="uq-pilar__frase">Lo que queda cuando el fuego se apaga.</span>
+        </div>
+        <div class="uq-pilar" data-aos="fade-up" data-aos-delay="400">
+          <span class="uq-pilar__nombre">La brasa</span>
+          <span class="uq-pilar__def">la persistencia</span>
+          <span class="uq-pilar__frase">Lo que sigue ardiendo sin que nadie lo vea.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================================================================
      LAS OBRAS
@@ -61,49 +99,76 @@
     <div class="grilla-2">
 
       <div class="libro-card libro-card--featured" data-aos="fade-up" data-aos-delay="100">
-        <div class="libro-card__imagen">
-          <img src="{{ .Site.BaseURL }}img/tapa-ebq.webp" alt="El Boliche Quemado"
-               width="400" height="605" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:1rem;\'><svg width=\'48\' height=\'64\' viewBox=\'0 0 48 64\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'2\' y=\'2\' width=\'44\' height=\'60\' rx=\'3\' fill=\'%23221f1b\' stroke=\'%23c15c1e\' stroke-width=\'1\'/><text x=\'50%25\' y=\'42%25\' text-anchor=\'middle\' fill=\'%23c15c1e\' font-size=\'22\' font-family=\'serif\'>🔥</text></svg><span style=\'color:%23c15c1e;font-size:.75rem;letter-spacing:.08em;\'>EL BOLICHE QUEMADO</span></div>'">
-        </div>
+        <a href="{{ .Site.BaseURL }}libros/el-boliche-quemado/" class="libro-card__imagen-link">
+          <div class="libro-card__imagen">
+            <img src="{{ .Site.BaseURL }}img/tapa-ebq.webp" alt="El Boliche Quemado — novela de Cristian Piscitelli"
+                 width="400" height="605" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:1rem;\'><svg width=\'48\' height=\'64\' viewBox=\'0 0 48 64\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'2\' y=\'2\' width=\'44\' height=\'60\' rx=\'3\' fill=\'%23221f1b\' stroke=\'%23c15c1e\' stroke-width=\'1\'/><text x=\'50%25\' y=\'42%25\' text-anchor=\'middle\' fill=\'%23c15c1e\' font-size=\'22\' font-family=\'serif\'>🔥</text></svg><span style=\'color:%23c15c1e;font-size:.75rem;letter-spacing:.08em;\'>EL BOLICHE QUEMADO</span></div>'">
+          </div>
+        </a>
         <div class="libro-card__cuerpo">
           <span class="libro-card__genero">Novela · Thriller psicológico rural</span>
-          <h3 class="libro-card__titulo">El Boliche Quemado</h3>
+          <h3 class="libro-card__titulo"><a href="{{ .Site.BaseURL }}libros/el-boliche-quemado/" class="libro-card__titulo-link">El Boliche Quemado</a></h3>
           <p class="libro-card__sinopsis">En la Nueva Plata de los años sesenta, un boliche arde. El pueblo recuerda sin hablar, niega sin olvidar y conserva bajo la ceniza una verdad que nadie quiere pronunciar.</p>
+          <a href="{{ .Site.BaseURL }}libros/el-boliche-quemado/" class="libro-card__ver-mas">Leer sinopsis completa →</a>
           <div class="libro-card__formatos">
             <span class="formato-tag">Digital</span>
             <span class="formato-tag">Audiolibro</span>
             <span class="formato-tag">Físico</span>
           </div>
           <div class="botones-grupo">
-            <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar</a>
+            <a href="{{ .Site.Params.tienda }}#el-boliche-quemado" class="btn btn-primario">Comprar eBook</a>
             <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-secundario">Escuchar muestra</a>
           </div>
         </div>
       </div>
 
       <div class="libro-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="libro-card__imagen">
-          <img src="{{ .Site.BaseURL }}img/tapa-cq.webp" alt="Contexto Quemado"
-               width="400" height="400" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:1rem;\'><svg width=\'48\' height=\'64\' viewBox=\'0 0 48 64\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'2\' y=\'2\' width=\'44\' height=\'60\' rx=\'3\' fill=\'%23221f1b\' stroke=\'%23c15c1e\' stroke-width=\'1\'/><text x=\'50%25\' y=\'42%25\' text-anchor=\'middle\' fill=\'%23c15c1e\' font-size=\'22\' font-family=\'serif\'>📖</text></svg><span style=\'color:%23c15c1e;font-size:.75rem;letter-spacing:.08em;\'>CONTEXTO QUEMADO</span></div>'">
-        </div>
+        <a href="{{ .Site.BaseURL }}libros/contexto-quemado/" class="libro-card__imagen-link">
+          <div class="libro-card__imagen">
+            <img src="{{ .Site.BaseURL }}img/tapa-cq.png" alt="Contexto Quemado — cuentos de Cristian Piscitelli"
+                 width="400" height="600" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:1rem;\'><svg width=\'48\' height=\'64\' viewBox=\'0 0 48 64\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'2\' y=\'2\' width=\'44\' height=\'60\' rx=\'3\' fill=\'%23221f1b\' stroke=\'%23c15c1e\' stroke-width=\'1\'/><text x=\'50%25\' y=\'42%25\' text-anchor=\'middle\' fill=\'%23c15c1e\' font-size=\'22\' font-family=\'serif\'>📖</text></svg><span style=\'color:%23c15c1e;font-size:.75rem;letter-spacing:.08em;\'>CONTEXTO QUEMADO</span></div>'">
+          </div>
+        </a>
         <div class="libro-card__cuerpo">
           <span class="libro-card__genero">Libro de cuentos cortos · Ficción literaria de atmósfera</span>
-          <h3 class="libro-card__titulo">Contexto Quemado</h3>
+          <h3 class="libro-card__titulo"><a href="{{ .Site.BaseURL }}libros/contexto-quemado/" class="libro-card__titulo-link">Contexto Quemado</a></h3>
           <p class="libro-card__subtitulo">Diez cuentos cortos que incineran</p>
           <p class="libro-card__sinopsis">Diez cuentos. Diez puertas. Cada relato es un umbral donde el dolor no se exhibe de manera obvia pero respira.</p>
+          <a href="{{ .Site.BaseURL }}libros/contexto-quemado/" class="libro-card__ver-mas">Leer sinopsis completa →</a>
           <div class="libro-card__formatos">
             <span class="formato-tag">Digital</span>
             <span class="formato-tag">Audiolibro</span>
           </div>
           <div class="botones-grupo">
-            <a href="{{ .Site.Params.tienda }}" class="btn btn-primario" target="_blank" rel="noopener">Comprar</a>
+            <a href="{{ .Site.Params.tienda }}#contexto-quemado" class="btn btn-primario">Comprar eBook</a>
             <a href="{{ .Site.BaseURL }}audiolibro/" class="btn btn-secundario">Escuchar muestra</a>
           </div>
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FRAGMENTO LITERARIO
+     ================================================================ -->
+<section class="fragmento-seccion">
+  <div class="fragmento-imagen" aria-hidden="true"></div>
+  <div class="container">
+    <div class="fragmento-inner" data-aos="fade-up" data-aos-duration="900">
+      <p class="fragmento-origen">El Boliche Quemado &nbsp;·&nbsp; Fragmento</p>
+      <blockquote class="fragmento-cuerpo">
+        <p>En ese boliche, cada noche era un pacto tácito entre los que cruzaban su umbral. Allí no importaba quién eras afuera, solo lo que buscabas olvidar.</p>
+        <p>Las copas se llenaban de vino espeso, de ginebra áspera, pero también de palabras no dichas, de historias que se quedaban atrapadas en el humo de los cigarrillos.</p>
+        <p class="fragmento-remate">Era un lugar donde las almas inquietas encontraban un instante de paz o una excusa para el desahogo.<em>Pero ese consuelo tenía un precio: el silencio.</em></p>
+      </blockquote>
+      <div class="fragmento-acciones">
+        <a href="{{ .Site.Params.tienda }}#el-boliche-quemado" class="btn btn-primario">Leer la novela</a>
+        <a href="{{ .Site.BaseURL }}libros/el-boliche-quemado/" class="fragmento-link">Ver sinopsis completa →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -146,8 +211,8 @@
 <section class="section">
   <div class="container">
     <div class="pullquote" data-aos="fade-up">
-      <p class="pullquote__texto">"En mis historias, el silencio no es ausencia.<br>Es el personaje más peligroso."</p>
-      <span class="pullquote__autor">— Cristian Piscitelli</span>
+      <p class="pullquote__texto">En mis historias, el silencio no es ausencia.<br>Es el personaje más peligroso.</p>
+      <span class="pullquote__autor">Cristian Piscitelli</span>
     </div>
   </div>
 </section>
@@ -194,7 +259,7 @@
   <div class="container">
     <div class="sobre-mini-grid">
       <div class="sobre-mini-foto" data-aos="fade-right">
-        <img src="/img/foto-autor.webp" alt="Cristian Piscitelli, escritor argentino" width="543" height="724" loading="lazy">
+        <img src="/img/foto-autor.png" alt="Cristian Piscitelli, escritor argentino" width="1087" height="1447" loading="lazy">
       </div>
       <div data-aos="fade-up">
         <span class="etiqueta">El escritor</span>

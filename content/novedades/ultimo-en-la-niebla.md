@@ -6,6 +6,7 @@ tipo: "Audiocuento"
 slug: "ultimo-en-la-niebla"
 draft: false
 video_url: "/novedades/ultimo-en-la-niebla/ultimo-en-la-niebla---ultimo-en-la-niebla.mp4"
+video_orientation: "vertical"
 thumbnail: "/novedades/ultimo-en-la-niebla/thumbnail.jpg"
 hashtags:
   - "#UniversoQuemado"

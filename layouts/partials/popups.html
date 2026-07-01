@@ -1,0 +1,466 @@
+{{/* Sistema de popups con efecto fuego — leído desde /popups.json */}}
+<style>
+/* ── Overlay ── */
+.uq-popup-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: radial-gradient(ellipse at center, rgba(60,15,0,.55) 0%, rgba(13,12,11,.92) 100%);
+  display: none; align-items: center; justify-content: center;
+  padding: 1.2rem; backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0; transition: opacity .35s ease;
+}
+.uq-popup-overlay.visible { display: flex; opacity: 1; }
+
+/* ── Caja del popup ── */
+.uq-popup {
+  position: relative;
+  max-width: 480px; width: 100%;
+  background: linear-gradient(160deg, #1a1411 0%, #0d0c0b 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(193,92,30,.35);
+  box-shadow: 0 0 50px rgba(0,0,0,.7), 0 0 80px rgba(193,92,30,.25);
+  overflow: hidden;
+  font-family: inherit;
+  color: #f0ead6;
+  transform: scale(.78) rotate(-1.5deg);
+  opacity: 0;
+  animation: uq-popup-reveal .85s cubic-bezier(.2,.9,.3,1.1) forwards;
+}
+@keyframes uq-popup-reveal {
+  0%   { transform: scale(.78) rotate(-1.5deg); opacity: 0; filter: brightness(2.2) saturate(1.8); }
+  35%  { transform: scale(1.04) rotate(.4deg);  opacity: 1; filter: brightness(1.6) saturate(1.4); }
+  70%  { transform: scale(.99) rotate(-.2deg);  opacity: 1; filter: brightness(1.15); }
+  100% { transform: scale(1)    rotate(0);      opacity: 1; filter: brightness(1); }
+}
+
+/* ── Bordes brasa flickeante ── */
+.uq-popup::before {
+  content: ''; position: absolute; inset: -2px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(193,92,30,.7), rgba(217,112,52,.4), rgba(193,92,30,.7));
+  z-index: -1; opacity: 0;
+  animation: uq-ember-flicker 3s ease-in-out infinite;
+}
+@keyframes uq-ember-flicker {
+  0%, 100% { opacity: .35; filter: blur(2px); }
+  20%      { opacity: .65; filter: blur(1px); }
+  50%      { opacity: .45; filter: blur(3px); }
+  80%      { opacity: .55; filter: blur(1.5px); }
+}
+
+/* ── Capa de brasas/partículas ── */
+.uq-popup__embers {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+  border-radius: 10px; z-index: 1;
+}
+
+/* ── Cerrar ── */
+.uq-popup__close {
+  position: absolute; top: 10px; right: 12px;
+  width: 30px; height: 30px;
+  background: rgba(0,0,0,.55);
+  border: 1px solid rgba(193,92,30,.4);
+  color: #f0ead6;
+  font-size: 1.1rem; line-height: 1;
+  cursor: pointer; border-radius: 50%;
+  z-index: 10;
+  transition: background .2s, transform .15s, border-color .2s;
+}
+.uq-popup__close:hover {
+  background: rgba(193,92,30,.4);
+  border-color: rgba(193,92,30,.9);
+  transform: rotate(90deg);
+}
+
+/* ── Banner top ── */
+.uq-popup__banner {
+  background: linear-gradient(90deg, rgba(193,92,30,.85), rgba(217,112,52,.85));
+  color: #0d0c0b;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-align: center;
+  padding: .5rem 1rem;
+  position: relative; z-index: 2;
+}
+.uq-popup__banner:empty { display: none; }
+
+/* ── Media ── */
+.uq-popup__media {
+  position: relative;
+  width: 100%;
+  background: #0a0a08;
+  z-index: 2;
+}
+.uq-popup__media img,
+.uq-popup__media video,
+.uq-popup__media iframe {
+  width: 100%; max-height: 280px;
+  object-fit: cover; display: block;
+}
+.uq-popup__media iframe { aspect-ratio: 16/9; max-height: none; }
+.uq-popup__media:empty { display: none; }
+
+/* ── Contenido ── */
+.uq-popup__content {
+  padding: 1.4rem 1.5rem 1.2rem;
+  position: relative; z-index: 2;
+}
+.uq-popup__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 700; line-height: 1.15;
+  color: #f0ead6;
+  margin: 0 0 .6rem;
+}
+.uq-popup__body {
+  font-size: .9rem; line-height: 1.6;
+  color: #c1bfb6;
+  margin: 0 0 1rem;
+}
+.uq-popup__body p { margin: 0 0 .55rem; }
+.uq-popup__body p:last-child { margin-bottom: 0; }
+.uq-popup__body strong { color: #f0ead6; }
+.uq-popup__body em { color: #d6cba5; }
+.uq-popup__body a { color: var(--brasa, #c15c1e); text-decoration: underline; }
+.uq-popup__body blockquote {
+  border-left: 3px solid rgba(193,92,30,.7);
+  padding: .35rem .9rem;
+  margin: .5rem 0;
+  font-style: italic;
+  color: #ada79c;
+}
+.uq-popup__body ul, .uq-popup__body ol { margin: .35rem 0 .55rem 1.2rem; padding-left: .8rem; }
+.uq-popup__body li { margin-bottom: .25rem; }
+.uq-popup__body img { max-width: 100%; height: auto; border-radius: 4px; display: block; margin: .5rem auto; }
+
+/* ── Clases que escribe Quill ── */
+.uq-popup__body .ql-align-center  { text-align: center; }
+.uq-popup__body .ql-align-right   { text-align: right; }
+.uq-popup__body .ql-align-justify { text-align: justify; }
+.uq-popup__body .ql-size-small  { font-size: .78em; }
+.uq-popup__body .ql-size-large  { font-size: 1.4em; }
+.uq-popup__body .ql-size-huge   { font-size: 2em; line-height: 1.15; }
+
+/* ── Variantes de tamaño del popup ── */
+.uq-popup--size-small  { max-width: 340px; }
+.uq-popup--size-medium { max-width: 480px; } /* default */
+.uq-popup--size-large  { max-width: 620px; }
+.uq-popup--size-xlarge { max-width: 780px; }
+
+/* ── Variantes de posición ── */
+.uq-popup-overlay--pos-top-left     { align-items: flex-start;  justify-content: flex-start; padding-top: 1.5rem; padding-left: 1.5rem; }
+.uq-popup-overlay--pos-top-center   { align-items: flex-start;  justify-content: center; padding-top: 1.5rem; }
+.uq-popup-overlay--pos-top-right    { align-items: flex-start;  justify-content: flex-end;   padding-top: 1.5rem; padding-right: 1.5rem; }
+.uq-popup-overlay--pos-bottom-left  { align-items: flex-end;    justify-content: flex-start; padding-bottom: 1.5rem; padding-left: 1.5rem; }
+.uq-popup-overlay--pos-bottom-center{ align-items: flex-end;    justify-content: center; padding-bottom: 1.5rem; }
+.uq-popup-overlay--pos-bottom-right { align-items: flex-end;    justify-content: flex-end;   padding-bottom: 1.5rem; padding-right: 1.5rem; }
+
+/* Modo toast: sin backdrop bloqueante */
+.uq-popup-overlay--toast {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+.uq-popup-overlay--toast .uq-popup { pointer-events: auto; }
+
+/* ── CTA ── */
+.uq-popup__cta {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: linear-gradient(90deg, rgba(193,92,30,.95), rgba(217,112,52,.95));
+  color: #0d0c0b;
+  font-size: .82rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none;
+  padding: .7rem 1.1rem;
+  border-radius: 4px;
+  border: none; cursor: pointer;
+  transition: transform .15s, box-shadow .2s, filter .2s;
+}
+.uq-popup__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(193,92,30,.55);
+  filter: brightness(1.08);
+}
+
+/* ── Footer de redes ── */
+.uq-popup__social {
+  margin-top: 1.2rem;
+  padding: .9rem 1.5rem 1.1rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+  background: rgba(0,0,0,.25);
+  display: flex; flex-wrap: wrap; gap: .45rem;
+  justify-content: center; align-items: center;
+  position: relative; z-index: 2;
+}
+.uq-popup__social-label {
+  width: 100%;
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: #6b6560; text-align: center;
+  margin-bottom: .15rem;
+}
+.uq-popup__social-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border: 1px solid rgba(193,92,30,.25);
+  border-radius: 50%;
+  color: #c1bfb6;
+  background: rgba(0,0,0,.35);
+  text-decoration: none;
+  transition: all .2s;
+}
+.uq-popup__social-btn:hover {
+  border-color: rgba(193,92,30,.9);
+  color: #f0ead6;
+  background: rgba(193,92,30,.18);
+  transform: translateY(-1px);
+}
+.uq-popup__social-btn svg {
+  width: 14px; height: 14px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 520px) {
+  .uq-popup { max-width: 100%; }
+  .uq-popup__content { padding: 1.1rem 1.1rem .9rem; }
+  .uq-popup__social { padding: .8rem 1rem .9rem; gap: .35rem; }
+  .uq-popup__social-btn { width: 28px; height: 28px; }
+}
+</style>
+
+<div id="uq-popup-overlay" class="uq-popup-overlay" aria-hidden="true"></div>
+
+<script>
+(function() {
+  // ── TUS REDES (orden y URLs reales del sitio) ──
+  const NETWORKS = [
+    { k: 'instagram', url: '{{ .Site.Params.instagram }}', label: 'Instagram', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>' },
+    { k: 'facebook',  url: '{{ .Site.Params.facebook }}',  label: 'Facebook',  svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>' },
+    { k: 'tiktok',    url: '{{ .Site.Params.tiktok }}',    label: 'TikTok',    svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/></svg>' },
+    { k: 'youtube',   url: '{{ .Site.Params.youtube }}',   label: 'YouTube',   svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.79-.49-5.6a2.93 2.93 0 0 0-2.06-2.08C18.65 4 12 4 12 4s-6.65 0-8.46.49A2.93 2.93 0 0 0 1.49 6.4C1 8.21 1 12 1 12s0 3.79.49 5.6a2.93 2.93 0 0 0 2.06 2.08C5.35 20 12 20 12 20s6.65 0 8.46-.49a2.93 2.93 0 0 0 2.06-2.08C23 15.79 23 12 23 12zm-13.2 3.45V8.55L15.4 12z"/></svg>' },
+    { k: 'twitter',   url: 'https://twitter.com/{{ replace .Site.Params.twitterSite "@" "" }}', label: 'X',     svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' },
+    { k: 'linkedin',  url: 'https://www.linkedin.com/in/crispeh/',  label: 'LinkedIn',  svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>' },
+    { k: 'amazon',    url: '{{ .Site.Params.amazon }}',    label: 'Amazon',    svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 12.25c0 2.5-1.7 3.7-3.2 3.7-1.4 0-2.4-1.1-2.4-2.7 0-3.2 3.5-3.4 5.6-3.4v.6c0 .8 0 1.5 0 1.8zm-3 8.5c-3.5 0-5.8-1.6-7.2-3.4-.3-.4.1-.7.5-.5 1.6 1 4.2 2.1 7 2.1 1.8 0 4-.4 5.8-1.2.3-.1.6.2.4.5-1.5 1.4-4 2.5-6.5 2.5zm9.8.2c-.2-.3-1.4-1-2.5-1.4-.4-.1-.4-.3 0-.5 1.2-.5 2.4-.5 2.8-.4.5.1.8 1 .5 1.5-.2.4-.5.7-.8.8zM18 8c0-1.8-.1-3.5-2-3.5-1.8 0-2 1.3-2 3 0 1.9.1 4 2 4 1.9 0 2-1.4 2-3.5zm-2 7c-3.7 0-6-2.5-6-6.5C10 4 12.7 2 16 2c3.7 0 6 2.5 6 6.5 0 4.5-2.7 6.5-6 6.5z"/></svg>' },
+    { k: 'goodreads', url: '{{ .Site.Params.goodreads }}', label: 'Goodreads', svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.43 23.75c-3.99 0-6.94-2.05-7.41-5.13h2.78c.66 2 2.42 3.06 4.79 3.06 3.38 0 5.28-2.46 5.28-6.34v-2.66h-.06c-1.05 2.16-2.94 3.45-5.45 3.45-4.6 0-7.65-3.39-7.65-8.6 0-5.21 3.06-8.66 7.65-8.66 2.51 0 4.36 1.27 5.45 3.45h.06V.5h2.59v14.84c-.01 5.04-2.95 8.41-8 8.41zM11.55 2.21c-3.13 0-4.99 2.48-4.99 6.66 0 4.2 1.86 6.66 4.99 6.66 3.12 0 4.99-2.46 4.99-6.66 0-4.18-1.87-6.66-4.99-6.66z"/></svg>' },
+    { k: 'email',     url: 'mailto:{{ .Site.Params.email }}', label: 'Email', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' }
+  ].filter(n => n.url && n.url !== '' && n.url !== 'mailto:');
+
+  const STORAGE_KEY = 'uq_popup_seen';
+
+  function getSeen() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+  function markSeen(id) {
+    const seen = getSeen();
+    seen[id] = Date.now();
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(seen)); } catch {}
+  }
+  function alreadyShown(p) {
+    const seen = getSeen()[p.id];
+    if (!seen) return false;
+    switch (p.frequency) {
+      case 'every_visit':      return false;
+      case 'once_per_session': return sessionStorage.getItem('uq_popup_' + p.id) === '1';
+      case 'once_per_user':    return true;
+      case 'every_3_days':     return (Date.now() - seen) < 3*86400*1000;
+      case 'every_7_days':     return (Date.now() - seen) < 7*86400*1000;
+      default:                 return true;
+    }
+  }
+
+  function matchesPath(currentPath, patterns) {
+    if (!patterns || !patterns.length) return false;
+    return patterns.some(p => {
+      if (p === '*' || p === '/*') return true;
+      // wildcard simple: /libros/* matchea /libros/cualquier-cosa
+      if (p.endsWith('/*')) return currentPath.startsWith(p.slice(0, -1));
+      // exact match (con o sin trailing slash)
+      const a = currentPath.replace(/\/$/, '');
+      const b = p.replace(/\/$/, '');
+      return a === b;
+    });
+  }
+
+  function pickPopup(popups) {
+    const now = new Date();
+    const path = location.pathname;
+    for (const p of popups) {
+      if (!p.active) continue;
+      if (p.schedule && p.schedule.startAt && new Date(p.schedule.startAt) > now) continue;
+      if (p.schedule && p.schedule.endAt   && new Date(p.schedule.endAt)   < now) continue;
+      if (!matchesPath(path, p.showOn || ['*'])) continue;
+      if (p.excludeOn && matchesPath(path, p.excludeOn)) continue;
+      if (alreadyShown(p)) continue;
+      return p;
+    }
+    return null;
+  }
+
+  function buildSocialHTML() {
+    if (!NETWORKS.length) return '';
+    return '<div class="uq-popup__social">' +
+      '<div class="uq-popup__social-label">Seguime</div>' +
+      NETWORKS.map(n =>
+        '<a class="uq-popup__social-btn" href="' + n.url + '" target="_blank" rel="noopener" aria-label="' + n.label + '" title="' + n.label + '">' + n.svg + '</a>'
+      ).join('') +
+    '</div>';
+  }
+
+  function buildMediaHTML(p) {
+    if (p.videoUrl) {
+      const yt = p.videoUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([^&?]+)/);
+      if (yt) return '<div class="uq-popup__media"><iframe src="https://www.youtube.com/embed/' + yt[1] + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
+      if (/\.(mp4|webm|mov)$/i.test(p.videoUrl)) return '<div class="uq-popup__media"><video controls><source src="' + p.videoUrl + '"></video></div>';
+    }
+    if (p.imageUrl) return '<div class="uq-popup__media"><img src="' + p.imageUrl + '" alt="' + (p.title || '') + '"></div>';
+    return '';
+  }
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  }
+
+  function renderPopup(p) {
+    const overlay = document.getElementById('uq-popup-overlay');
+    if (!overlay) return;
+    const banner = p.banner ? '<div class="uq-popup__banner">' + escapeHtml(p.banner) + '</div>' : '';
+    const title  = p.title  ? '<h3 class="uq-popup__title">'  + escapeHtml(p.title)  + '</h3>' : '';
+    const body   = p.body   ? '<div class="uq-popup__body">'  + p.body  + '</div>' : '';
+    const cta    = (p.cta && p.cta.text && p.cta.url)
+      ? '<a class="uq-popup__cta" href="' + p.cta.url + '"' + (p.cta.openInNewTab ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(p.cta.text) + ' →</a>'
+      : '';
+    const media  = buildMediaHTML(p);
+    const social = buildSocialHTML();
+    const size     = p.size || 'medium';
+    const position = p.position || 'center';
+    const toast    = !!p.toast;
+
+    // Limpiar y aplicar clases de tamaño y posición
+    overlay.className = 'uq-popup-overlay';
+    if (position !== 'center') overlay.classList.add('uq-popup-overlay--pos-' + position);
+    if (toast && position !== 'center') overlay.classList.add('uq-popup-overlay--toast');
+
+    overlay.innerHTML =
+      '<div class="uq-popup uq-popup--size-' + size + '" role="dialog" aria-modal="true">' +
+        '<button class="uq-popup__close" aria-label="Cerrar">✕</button>' +
+        '<div class="uq-popup__embers"></div>' +
+        banner +
+        media +
+        '<div class="uq-popup__content">' + title + body + cta + '</div>' +
+        social +
+      '</div>';
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('visible');
+      overlay.setAttribute('aria-hidden', 'false');
+      spawnEmbers(overlay.querySelector('.uq-popup__embers'));
+    });
+
+    function close() {
+      overlay.classList.remove('visible');
+      overlay.setAttribute('aria-hidden', 'true');
+      sessionStorage.setItem('uq_popup_' + p.id, '1');
+      markSeen(p.id);
+      setTimeout(() => overlay.innerHTML = '', 400);
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    overlay.querySelector('.uq-popup__close').addEventListener('click', close);
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    if (p.cta && p.cta.url) {
+      const ctaEl = overlay.querySelector('.uq-popup__cta');
+      if (ctaEl) ctaEl.addEventListener('click', () => markSeen(p.id));
+    }
+    document.addEventListener('keydown', onKey);
+  }
+
+  // Partículas de brasa (Canvas dentro del popup, dura 3s en lo más fuerte)
+  function spawnEmbers(container) {
+    if (!container) return;
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = container.offsetWidth; canvas.height = container.offsetHeight; }
+    resize();
+    const colors = ['rgba(193,92,30,', 'rgba(217,112,52,', 'rgba(240,200,90,'];
+    const parts = [];
+    for (let i = 0; i < 32; i++) parts.push(mk(true));
+    function mk(spread) {
+      return {
+        x: spread ? Math.random() * canvas.width : Math.random() * canvas.width,
+        y: spread ? canvas.height - Math.random() * 80 : canvas.height + 4,
+        r: Math.random() * 1.6 + .6,
+        vx: (Math.random() - .5) * .6,
+        vy: -(Math.random() * 1.4 + .8),
+        life: 0,
+        maxLife: Math.random() * 90 + 60,
+        alpha: Math.random() * .7 + .3,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      };
+    }
+    let t0 = performance.now();
+    let raf;
+    function tick(now) {
+      const elapsed = now - t0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const intensityMult = elapsed < 1500 ? 1 : Math.max(0, 1 - (elapsed - 1500) / 3000);
+      parts.forEach((p, idx) => {
+        p.life++;
+        p.x += p.vx + Math.sin(p.life * .03) * .3;
+        p.y += p.vy;
+        const lifeRatio = p.life / p.maxLife;
+        const a = (lifeRatio < .15 ? lifeRatio / .15 : 1 - (lifeRatio - .15) / .85) * p.alpha * intensityMult;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + Math.max(0, a) + ')';
+        ctx.fill();
+        if (p.life >= p.maxLife || p.y < -8) {
+          if (elapsed < 3000) parts[idx] = mk(false);
+          else parts[idx] = null;
+        }
+      });
+      // Limpiar nulls
+      for (let i = parts.length - 1; i >= 0; i--) if (!parts[i]) parts.splice(i, 1);
+      if (parts.length > 0 && elapsed < 6000) raf = requestAnimationFrame(tick);
+      else canvas.remove();
+    }
+    raf = requestAnimationFrame(tick);
+    window.addEventListener('resize', resize);
+  }
+
+  async function load() {
+    let popups;
+    try {
+      const r = await fetch('/popups.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) return;
+      popups = await r.json();
+    } catch { return; }
+    if (!Array.isArray(popups) || !popups.length) return;
+    const target = pickPopup(popups);
+    if (!target) return;
+    const trigger = target.trigger || { type: 'delay', value: 2500 };
+    const fire = () => renderPopup(target);
+    if (trigger.type === 'load') fire();
+    else if (trigger.type === 'delay') setTimeout(fire, parseInt(trigger.value, 10) || 2500);
+    else if (trigger.type === 'scroll') {
+      const pct = parseInt(trigger.value, 10) || 50;
+      const onScroll = () => {
+        const sp = (window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight)) * 100;
+        if (sp >= pct) { fire(); window.removeEventListener('scroll', onScroll); }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    else if (trigger.type === 'exit') {
+      const onMove = e => { if (e.clientY < 5) { fire(); document.removeEventListener('mouseleave', onMove); } };
+      document.addEventListener('mouseleave', onMove);
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
+  else load();
+})();
+</script>

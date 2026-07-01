@@ -6,6 +6,7 @@ tipo: "Fragmento"
 slug: "la-plaza-y-las-miradas"
 draft: false
 video_url: "/novedades/la-plaza-y-las-miradas/reel-interes-sentimental.mp4"
+video_orientation: "vertical"
 thumbnail: "/novedades/la-plaza-y-las-miradas/thumbnail.jpg"
 hashtags:
   - "#UniversoQuemado"
